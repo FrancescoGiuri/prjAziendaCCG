@@ -1755,6 +1755,7 @@ select::-ms-expand {
   overflow: hidden;
   border-radius: .25em;
   float:right;
+  margin-right: 0.5em;
 }
 select {
   flex: 1;
@@ -1779,4 +1780,15 @@ select {
 /* Transition */
 .select:hover::after {
   color: #18d26e;
+}
+
+.cart{
+  width: 7em;
+  height: 3em;
+  line-height: 3;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+  padding: 0 .7em;
+  flex: 1;
 }
