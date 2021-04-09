@@ -1,8 +1,8 @@
 package it.mytech;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,35 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class InitServlet
+ * Servlet implementation class CarrelloServlet
  */
-@WebServlet("/init")
-public class InitServlet extends HttpServlet {
+@WebServlet("/carrelloservlet")
+public class CarrelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public InitServlet() {
+	public CarrelloServlet() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		System.out.println("INIZIALIZZAZIONE...");
-		try {
-			DBManager db = new DBManager();
-			int numDipendenti = db.getNumDipendenti();
-			int numClienti = db.getNumClienti();
-			int numOrdini = db.getNumOrdini();
-			db.close();
-			config.getServletContext().setAttribute("SESSION_NUM_DIPENDENTI", numDipendenti);
-			config.getServletContext().setAttribute("SESSION_NUM_CLIENTI", numClienti);
-			config.getServletContext().setAttribute("SESSION_NUM_ORDINI", numOrdini);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -57,8 +40,25 @@ public class InitServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		int id = Integer.parseInt(request.getParameter("id"));
+		int quantita = Integer.parseInt(request.getParameter("quantita"));
+		try {
+			DBManager db = new DBManager();
+			Prodotto p = db.getProdotto(id);
+			ArrayList<Prodotto> elenco = (ArrayList<Prodotto>) request.getSession()
+					.getAttribute("SESSION_PRODOTTI_CARRELLO");
+			ArrayList<Integer> q = (ArrayList<Integer>) request.getSession().getAttribute("SESSION_QUANTITA_CARRELLO");
+			if (elenco == null) {
+				elenco = new ArrayList<Prodotto>();
+				q = new ArrayList<Integer>();
+			}
+			elenco.add(p);
+			q.add(quantita);
+			request.getSession().setAttribute("SESSION_PRODOTTI_CARRELLO", elenco);
+			request.getSession().setAttribute("SESSION_QUANTITA_CARRELLO", q);
+			response.sendRedirect("servizi.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
 }

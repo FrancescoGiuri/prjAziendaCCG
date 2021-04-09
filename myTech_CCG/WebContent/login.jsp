@@ -25,15 +25,17 @@
 
 	<div class="limiter">
 		<div class="container-login100">
-			<div class="wrap-login100-forgot">
+			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="img/logo.png" alt="IMG">
 				</div>
 
-				<form class="login100-form validate-form">
-					<br><br><br><br>
+				<form action="login" method="POST" class="login100-form validate-form">
+				<input type="hidden" name="from" value="${param.from}">
+				
+					<br><br>
 					<span class="login100-form-title">
-						Recupera le tue credenziali!
+						Effettua il login a myTech!
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Inserisci un'email valida">
@@ -44,18 +46,34 @@
 						</span>
 					</div>
 
+					<div class="wrap-input100 validate-input" data-validate = "Inserisci una password">
+						<input class="input100" type="password" name="pass" placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					<center>Accedi come</center>
+					<center>
+					<input type="radio" name="tipo" value=1 checked> Manager &nbsp
+					<input type="radio" name="tipo" value=2> Dipendente &nbsp
+					<input type="radio" name="tipo" value=3> Cliente/Azienda &nbsp
+					</center>
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Invia email
+						<button type="submit" class="login100-form-btn">
+							Login
 						</button>
 					</div>
 
 					<div class="text-center p-t-12">
-						<a class="txt2" href="login.html">
-							Accedi
+						<span class="txt1">
+							Forgot
+						</span>
+						<a class="txt2" href="forgotPassword.jsp">
+							Password?
 						</a>
 						&nbsp&nbsp/&nbsp&nbsp
-						<a class="txt2" href="registrazione.html">
+						<a class="txt2" href="registrazione.jsp">
 							Crea un account
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
