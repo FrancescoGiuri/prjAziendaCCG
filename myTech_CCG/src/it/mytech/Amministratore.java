@@ -1,37 +1,45 @@
 package it.mytech;
 
-public class Dipendente {
-	private int idDipendente;
+public class Amministratore {
+	private int id;
 	private String email;
 	private String password;
 	private String nome;
 	private String cognome;
 	private String ruolo;
 	private float stipendio;
-	private int idManager;
+	private boolean manager;
 
-	public Dipendente() {
+	public Amministratore() {
 
 	}
 
-	public Dipendente(int idDipendente, String email, String password, String nome, String cognome, String ruolo,
-			float stipendio, int idManager) {
-		this.idDipendente = idDipendente;
+	public Amministratore(int id, String email, String password, String nome, String cognome, String ruolo,
+			float stipendio, boolean manager) {
+		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.ruolo = ruolo;
 		this.stipendio = stipendio;
-		this.idManager = idManager;
+		this.manager = manager;
 	}
 
-	public int getIdDipendente() {
-		return idDipendente;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdDipendente(int idDipendente) {
-		this.idDipendente = idDipendente;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isManager() {
+		return manager;
+	}
+
+	public void setManager(boolean manager) {
+		this.manager = manager;
 	}
 
 	public String getEmail() {
@@ -80,21 +88,6 @@ public class Dipendente {
 
 	public void setStipendio(float stipendio) {
 		this.stipendio = stipendio;
-	}
-
-	public int getIdManager() {
-		return idManager;
-	}
-
-	public void setIdManager(int idManager) {
-		this.idManager = idManager;
-	}
-
-	@Override
-	public String toString() {
-		return "Dipendente [idDipendente=" + idDipendente + ", email=" + email + ", password=" + password + ", nome="
-				+ nome + ", cognome=" + cognome + ", ruolo=" + ruolo + ", stipendio=" + stipendio + ", idManager="
-				+ idManager + "]";
 	}
 
 }

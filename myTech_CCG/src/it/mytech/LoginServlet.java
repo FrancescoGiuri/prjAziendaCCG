@@ -43,9 +43,7 @@ public class LoginServlet extends HttpServlet {
 		int tipo = Integer.parseInt(request.getParameter("tipo"));
 		String t = "";
 		if (tipo == 1) {
-			t = "manager";
-		} else if (tipo == 2) {
-			t = "dipendente";
+			t = "amministrazione";
 		} else {
 			t = "cliente";
 		}
@@ -53,17 +51,19 @@ public class LoginServlet extends HttpServlet {
 			DBManager db = new DBManager();
 			if (db.verificaCredenziali(email, password, t)) {
 				if (tipo == 1) {
-					Manager m = db.getManager(email);
-					request.getSession().setAttribute("SESSION_USERNAME", m.getNome());
-				} else if (tipo == 2) {
-					Dipendente d = db.getDipendente(email);
-					request.getSession().setAttribute("SESSION_USERNAME", d.getNome());
+					Amministratore a = db.getAmministratore(email);
+					request.getSession().setAttribute("SESSION_USERNAME", a.getNome());
+					if (a.isManager())
+						request.getSession().setAttribute("SESSION_USER_TYPE", 1);
+					else
+						request.getSession().setAttribute("SESSION_USER_TYPE", 2);
 				} else {
 					Cliente c = db.getCliente(email);
 					request.getSession().setAttribute("SESSION_USERNAME", c.getNome());
 					request.getSession().setAttribute("SESSION_IDCLIENTE", c.getIdCliente());
+					request.getSession().setAttribute("SESSION_USER_TYPE", 3);
 				}
-				request.getSession().setAttribute("SESSION_USER_TYPE", tipo);
+
 				if (tipo == 3)
 					response.sendRedirect(request.getParameter("from"));
 				else

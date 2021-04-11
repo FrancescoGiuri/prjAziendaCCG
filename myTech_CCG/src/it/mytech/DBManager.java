@@ -38,23 +38,14 @@ public class DBManager {
 		return rs.next();
 	}
 
-	public Manager getManager(String email) throws Exception {
-		Manager m = new Manager();
-		String sqlSelect = "SELECT * FROM MANAGER WHERE EMAIL='" + email + "';";
-		rs = query.executeQuery(sqlSelect);
-		if (rs.next())
-			m = new Manager(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
-		return m;
-	}
-
-	public Dipendente getDipendente(String email) throws Exception {
-		Dipendente d = new Dipendente();
+	public Amministratore getAmministratore(String email) throws Exception {
+		Amministratore a = new Amministratore();
 		String sqlSelect = "SELECT * FROM DIPENDENTE WHERE EMAIL='" + email + "';";
 		rs = query.executeQuery(sqlSelect);
 		if (rs.next())
-			d = new Dipendente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-					rs.getString(6), rs.getFloat(7), rs.getInt(8));
-		return d;
+			a = new Amministratore(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+					rs.getString(6), rs.getFloat(7), rs.getBoolean(8));
+		return a;
 	}
 
 	public Cliente getCliente(String email) throws Exception {
