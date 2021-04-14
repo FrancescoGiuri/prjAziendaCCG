@@ -1,10 +1,19 @@
 <%@ page language="java" import="it.mytech.*"
-	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%!Prodotto p;%>
+<%!Prodotto p;
+	String nome;%>
 
 <%
 	p = (Prodotto) session.getAttribute("SESSION_PRODOTTO");
+try {
+	nome = (String) session.getAttribute("SESSION_USERNAME");
+	if (nome == null)
+		nome = "";
+
+} catch (Exception e) {
+	nome = "";
+}
 %>
 
 <!DOCTYPE html>
@@ -31,7 +40,12 @@
 	rel="stylesheet">
 <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 <meta name="robots" content="noindex,follow" />
-
+<script type="text/javascript">
+	function logout() {
+		var richiesta = window.confirm("Effettuare il logout?");
+		return richiesta;
+	}
+</script>
 </head>
 
 <body>
@@ -39,38 +53,48 @@
 
 		<!-- Left Column / Headphones Image -->
 		<div class="left-column">
-			<img data-image="red" class="active" src="img/<%=p.getImmagine()%>">
+			<img data-image="red" class="active"
+				src="img/prodotti/<%=p.getImmagine()%>" style="width: 70%">
 		</div>
 
 		<!-- Right Column -->
 		<div class="right-column">
+			<form
+				action="<%if (!nome.equals("")) {%>
+					carrelloservlet?cmd=addprodotto&id=<%=p.getIdProdotto()%><%} else {%>login.jsp?from=${pageContext.request.requestURI}<%}%>"
+				method="POST">
 
-			<!-- Product Description -->
-			<div class="product-description">
-				<span> <%
+				<!-- Product Description -->
+				<div class="product-description">
+					<span> <%
  	if (p.getTipo() == 1) {
  %> Hardware<%
  	} else {
  %>Software<%
  	}
  %>
-				</span>
-				<h1><%=p.getNome()%></h1>
-				<p><%=p.getDescrizione()%></p>
-				<input type="number" name="quantita" value="1" style="width: 50px;">
-			</div>
+					</span>
 
-			<!-- Product Configuration -->
-			<div class="product-configuration">
-
-				<!-- Product Pricing -->
-				<div class="product-price">
-					<span>€<%=p.getPrezzo()%></span> <input
-						href="carrelloservlet?cmd=prodotto&id=<%=p.getIdProdotto()%>"
-						type="button" name="" class="btn-add" value="Aggiungi al carrello">
+					<h1><%=p.getNome()%></h1>
+					<p><%=p.getDescrizione()%></p>
+					<input type="number" name="quantita" value="1" style="width: 50px;"
+						min="1" max="<%=p.getDisponibilità()%>">
 				</div>
-				<br> <br> <br> <br> <br> <br> <br>
-			</div>
+
+				<!-- Product Configuration -->
+				<div class="product-configuration">
+
+					<!-- Product Pricing -->
+
+					<div class="product-price">
+						<span>€<%=p.getPrezzo()%></span> <input onclick="submit()"
+							type="button" name="" class="btn-add"
+							value="Aggiungi al carrello">
+					</div>
+
+					<br> <br> <br> <br> <br> <br> <br>
+			</form>
+		</div>
 	</main>
 
 	<!-- Scripts -->

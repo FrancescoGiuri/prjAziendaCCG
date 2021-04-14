@@ -1,6 +1,8 @@
 package it.mytech;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -58,13 +60,15 @@ public class DBManager {
 	}
 
 	public boolean checkEmail(String email) throws Exception {
-		String q = "SELECT * FROM MANAGER,DIPENDENTE,CLIENTE WHERE email='" + email + "';";
+		String q = "SELECT * FROM AMMINISTRATORE,CLIENTE WHERE AMMINISTRATORE.email='" + email + "' OR CLIENTE.email='"
+				+ email + "';";
 		rs = query.executeQuery(q);
 		return rs.next();
 	}
 
 	public String getPassword(String email) throws Exception {
-		String q = "SELECT * FROM MANAGER,DIPENDENTE,CLIENTE WHERE EMAIL='" + email + "';";
+		String q = "SELECT * FROM AMMINISTRATORE,CLIENTE WHERE AMMINISTRATORE.email='" + email + "' OR CLIENTE.email='"
+				+ email + "';";
 		rs = query.executeQuery(q);
 		String s = "";
 		if (rs.next()) {
@@ -76,7 +80,7 @@ public class DBManager {
 
 	public int getNumDipendenti() throws Exception {
 		int num;
-		String cntQuery = "SELECT COUNT(idDipendente) AS Totale FROM DIPENDENTE;";
+		String cntQuery = "SELECT COUNT(id) AS Totale FROM AMMINISTRATORE WHERE MANAGER=0;";
 		rs = query.executeQuery(cntQuery);
 		rs.next();
 		num = rs.getInt("Totale");
@@ -175,7 +179,8 @@ public class DBManager {
 	public ArrayList<Prodotto> getProdottibyOrdine(int idOrdine) throws Exception {
 		ArrayList<Prodotto> elenco = new ArrayList<Prodotto>();
 		Prodotto p;
-		String sqlSelect = "SELECT PRODOTTO.* FROM PRODOTTO,DETTAGLIO,CLIENTE WHERE PRODOTTO.IDPRODOTTO=DETTAGLIO.IDPRODOTTO AND DETTAGLIO.IDORDINE=ORDINE.IDORDINE ";
+		String sqlSelect = "SELECT PRODOTTO.* FROM PRODOTTO,DETTAGLIO,CLIENTE WHERE PRODOTTO.IDPRODOTTO=DETTAGLIO.IDPRODOTTO AND DETTAGLIO.IDORDINE="
+				+ idOrdine + ";";
 		rs = query.executeQuery(sqlSelect);
 		while (rs.next()) {
 			p = new Prodotto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5),
@@ -216,7 +221,7 @@ public class DBManager {
 			pstm = connessione.prepareStatement(sql);
 			pstm.setInt(1, idOrdine);
 			pstm.setInt(2, elenco.get(i).getIdProdotto());
-			pstm.setInt(2, quantita.get(i));
+			pstm.setInt(3, quantita.get(i));
 			pstm.executeUpdate();
 		}
 	}
@@ -229,6 +234,18 @@ public class DBManager {
 			password = rs.getString("email");
 		}
 		return password;
+	}
+
+	public void addPrenotazione(String data, String ora, String messaggio, int idCliente) throws Exception {
+		PreparedStatement pstm;
+		String sql = "INSERT INTO PRENOTAZIONE VALUES (?,?,?,?,?);";
+		pstm = connessione.prepareStatement(sql);
+		pstm.setInt(1, getNewId("PRENOTAZIONE"));
+		pstm.setString(2, data);
+		pstm.setString(3, ora);
+		pstm.setString(4, messaggio);
+		pstm.setInt(5, idCliente);
+		pstm.executeUpdate();
 	}
 
 	public void close() throws Exception {

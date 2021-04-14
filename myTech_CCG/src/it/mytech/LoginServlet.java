@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 		int tipo = Integer.parseInt(request.getParameter("tipo"));
 		String t = "";
 		if (tipo == 1) {
-			t = "amministrazione";
+			t = "amministratore";
 		} else {
 			t = "cliente";
 		}

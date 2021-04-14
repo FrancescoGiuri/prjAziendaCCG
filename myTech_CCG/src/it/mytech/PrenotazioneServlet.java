@@ -1,26 +1,23 @@
 package it.mytech;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
 
 /**
- * Servlet implementation class OrdineServlet
+ * Servlet implementation class PrenotazioneServlet
  */
-@WebServlet("/ordine")
-public class OrdineServlet extends HttpServlet {
+@WebServlet("/prenotazione")
+public class PrenotazioneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public OrdineServlet() {
+	public PrenotazioneServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -41,24 +38,18 @@ public class OrdineServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ArrayList<Prodotto> elenco = (ArrayList<Prodotto>) request.getSession()
-				.getAttribute("SESSION_PRODOTTI_CARRELLO");
-		ArrayList<Integer> q = (ArrayList<Integer>) request.getSession().getAttribute("SESSION_QUANTITA_CARRELLO");
+		String data = request.getParameter("data");
+		System.out.println(data);
+		String ora = request.getParameter("ora");
+		String messaggio = request.getParameter("message");
 		try {
 			ConfigMailManager cmm = new ConfigMailManager();
 			DBManager db = new DBManager();
-			int idOrdine = db.getNewId("ORDINE");
-			db.createOrdine(idOrdine, (Integer) request.getSession().getAttribute("SESSION_IDCLIENTE"), elenco, q);
+			db.addPrenotazione(data, ora, messaggio, (Integer) request.getSession().getAttribute("SESSION_IDCLIENTE"));
 			String email = db.getEmail((Integer) request.getSession().getAttribute("SESSION_IDCLIENTE"));
-			cmm.sendConfermaOrdine(email);
-			PDFPrint pdf = new PDFPrint();
-			ByteArrayOutputStream output = pdf.printOrdineRecap(idOrdine);
-			response.addHeader("Content-Type", "application/force-download");
-			response.addHeader("Content-Disposition", "attachment; filename=\"RecapOrdine.pdf\"");
-			response.getOutputStream().write(output.toByteArray());
-			response.sendRedirect("servizi?cmd=viewall");
-			request.getSession().removeAttribute("SESSION_PRODOTTI_CARRELLO");
-			request.getSession().removeAttribute("SESSION_QUANTITA_CARRELLO");
+			cmm.sendPrenotazioneRicevuta(email);
+			response.sendRedirect("index.jsp");
+			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

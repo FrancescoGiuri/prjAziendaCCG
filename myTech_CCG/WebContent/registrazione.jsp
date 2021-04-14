@@ -28,7 +28,7 @@
 <script>
 	function checkPassword() {
 		var password = document.registrazione.pass.value;
-		var conferma = document.invio.passConferma.value;
+		var conferma = document.registrazione.passConferma.value;
 		if (password != conferma) {
 			alert("Conferma password errata");
 			document.registrazione.passConferma.value = "";
@@ -106,9 +106,10 @@
 					</div>
 
 					<div class="text-center p-t-12">
-						<span class="txt1"> Forgot </span> <a class="txt2"
-							href="forgotPassword.jsp"> Password? </a> &nbsp&nbsp/&nbsp&nbsp
-						<a class="txt2" href="login.jsp"> Accedi <i
+						<a class="txt2" href="index.jsp"> Home</a> &nbsp&nbsp/&nbsp&nbsp<span
+							class="txt1"> Forgot </span> <a class="txt2"
+							href="forgotPassword.jsp"> Password? </a> &nbsp&nbsp/&nbsp&nbsp <a
+							class="txt2" href="login.jsp"> Accedi <i
 							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
 					</div>

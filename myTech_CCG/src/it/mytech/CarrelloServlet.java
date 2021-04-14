@@ -30,8 +30,27 @@ public class CarrelloServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String comando = request.getParameter("cmd");
+		int id = Integer.parseInt(request.getParameter("id"));
+		if (comando.equals("removeprodotto")) {
+			ArrayList<Prodotto> elenco = (ArrayList<Prodotto>) request.getSession()
+					.getAttribute("SESSION_PRODOTTI_CARRELLO");
+			ArrayList<Integer> q = (ArrayList<Integer>) request.getSession().getAttribute("SESSION_QUANTITA_CARRELLO");
+			for (int i = 0; i < elenco.size(); i++)
+				if (elenco.get(i).getIdProdotto() == id) {
+					elenco.remove(i);
+					q.remove(i);
+				}
+			if (elenco.size() == 0) {
+				elenco = null;
+				q = null;
+			}
+			request.getSession().removeAttribute("SESSION_PRODOTTI_CARRELLO");
+			request.getSession().setAttribute("SESSION_PRODOTTI_CARRELLO", elenco);
+			request.getSession().removeAttribute("SESSION_QUANTITA_CARRELLO");
+			request.getSession().setAttribute("SESSION_QUANTITA_CARRELLO", q);
+			response.sendRedirect("carrello.jsp");
+		}
 	}
 
 	/**
@@ -40,25 +59,31 @@ public class CarrelloServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String comando = request.getParameter("cmd");
 		int id = Integer.parseInt(request.getParameter("id"));
-		int quantita = Integer.parseInt(request.getParameter("quantita"));
-		try {
-			DBManager db = new DBManager();
-			Prodotto p = db.getProdotto(id);
-			ArrayList<Prodotto> elenco = (ArrayList<Prodotto>) request.getSession()
-					.getAttribute("SESSION_PRODOTTI_CARRELLO");
-			ArrayList<Integer> q = (ArrayList<Integer>) request.getSession().getAttribute("SESSION_QUANTITA_CARRELLO");
-			if (elenco == null) {
-				elenco = new ArrayList<Prodotto>();
-				q = new ArrayList<Integer>();
+		if (comando.equals("addprodotto")) {
+			int quantita = Integer.parseInt(request.getParameter("quantita"));
+			try {
+				DBManager db = new DBManager();
+				Prodotto p = db.getProdotto(id);
+				ArrayList<Prodotto> elenco = (ArrayList<Prodotto>) request.getSession()
+						.getAttribute("SESSION_PRODOTTI_CARRELLO");
+				ArrayList<Integer> q = (ArrayList<Integer>) request.getSession()
+						.getAttribute("SESSION_QUANTITA_CARRELLO");
+				if (elenco == null) {
+					elenco = new ArrayList<Prodotto>();
+					q = new ArrayList<Integer>();
+				}
+				elenco.add(p);
+				q.add(quantita);
+				request.getSession().removeAttribute("SESSION_PRODOTTI_CARRELLO");
+				request.getSession().setAttribute("SESSION_PRODOTTI_CARRELLO", elenco);
+				request.getSession().removeAttribute("SESSION_QUANTITA_CARRELLO");
+				request.getSession().setAttribute("SESSION_QUANTITA_CARRELLO", q);
+				response.sendRedirect("servizi?cmd=viewall");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			elenco.add(p);
-			q.add(quantita);
-			request.getSession().setAttribute("SESSION_PRODOTTI_CARRELLO", elenco);
-			request.getSession().setAttribute("SESSION_QUANTITA_CARRELLO", q);
-			response.sendRedirect("servizi.jsp");
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }

@@ -12,8 +12,11 @@
 categoria = (String) session.getAttribute("CATEGORIA");
 if (categoria == null)
 	categoria = "";
+
 try {
 	nome = (String) session.getAttribute("SESSION_USERNAME");
+	if (nome == null)
+		nome = "";
 	tipo = (Integer) session.getAttribute("SESSION_USER_TYPE");
 
 } catch (Exception e) {
@@ -59,6 +62,12 @@ try {
     Author: BootstrapMade.com
     License: https://bootstrapmade.com/license/
   ======================================================= -->
+  <script type="text/javascript">
+	function logout() {
+		var richiesta = window.confirm("Effettuare il logout?");
+		return richiesta;
+	}
+</script>
 </head>
 
 <body>
@@ -134,7 +143,7 @@ try {
 			</header>
 			<form action="servizi?cmd=categoria" method="GET">
 				<p style="float: left">Ecco tutti i nostri prodotti. Usa il
-					filtro per dividerli in catgorie</p>
+					filtro per dividerli in categorie</p>
 				&nbsp&nbsp&nbsp&nbsp <i class="fa fa-arrow-right" aria-hidden="true"></i>
 				<div style="float: right">
 					<a href="carrello.jsp"><input class="cart" type="button"
@@ -147,6 +156,7 @@ try {
 							categoria</option>
 						<option <%if (categoria.equals("1")) {%> selected <%}%> value="1">Hardware</option>
 						<option <%if (categoria.equals("2")) {%> selected <%}%> value="2">Software</option>
+						<option <%if (categoria.equals("3")) {%> selected <%}%> value="3">Tutti</option>
 					</select>
 
 				</div>
@@ -162,7 +172,8 @@ try {
 				<div class="col-md-4 wow fadeInUp">
 					<div class="services-col">
 						<div class="img">
-							<img src="img/<%=p.getImmagine()%>" alt="" class="img-fluid">
+							<img src="img/prodotti/<%=p.getImmagine()%>" alt=""
+								class="img-fluid">
 							<div class="icon">
 								<i class="fa fa-info"></i>
 							</div>
@@ -201,10 +212,12 @@ try {
 					<div class="col-lg-3 col-md-6 footer-links">
 						<h4>Link utili</h4>
 						<ul>
-							<li><i class="ion-ios-arrow-right"></i> <a href="#intro">Home</a></li>
-							<li><i class="ion-ios-arrow-right"></i> <a href="#about">About
-									us</a></li>
-							<li><i class="ion-ios-arrow-right"></i> <a href="#services">Servizi</a></li>
+							<li><i class="ion-ios-arrow-right"></i> <a
+								href="index.jsp#intro">Home</a></li>
+							<li><i class="ion-ios-arrow-right"></i> <a
+								href="index.jsp#about">About us</a></li>
+							<li><i class="ion-ios-arrow-right"></i> <a
+								href="index.jsp#services">Servizi</a></li>
 							<li><i class="ion-ios-arrow-right"></i> <a href="#">Privacy
 									policy</a></li>
 						</ul>

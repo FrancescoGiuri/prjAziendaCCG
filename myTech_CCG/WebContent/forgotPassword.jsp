@@ -54,10 +54,10 @@
 					</div>
 
 					<div class="text-center p-t-12">
-						<a class="txt2" href="login.jsp"> Accedi </a>
-						&nbsp&nbsp/&nbsp&nbsp <a class="txt2" href="registrazione.jsp">
-							Crea un account <i class="fa fa-long-arrow-right m-l-5"
-							aria-hidden="true"></i>
+						<a class="txt2" href="index.jsp"> Home</a> &nbsp&nbsp/&nbsp&nbsp<a
+							class="txt2" href="login.jsp"> Accedi </a> &nbsp&nbsp/&nbsp&nbsp
+						<a class="txt2" href="registrazione.jsp"> Crea un account <i
+							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
 					</div>
 				</form>

@@ -24,7 +24,7 @@ quantita = (ArrayList<Integer>) session.getAttribute("SESSION_QUANTITA_CARRELLO"
 	<header id="site-header">
 		<div class="container">
 			<h1>
-				Carrello <a href="servizi.jsp"><input class="cart" type="button"
+				Carrello <a href="servizi?cmd=viewall"><input class="cart" type="button"
 					name="" value="Torna allo shop" style="float: right"></a>
 			</h1>
 		</div>
@@ -41,7 +41,7 @@ quantita = (ArrayList<Integer>) session.getAttribute("SESSION_QUANTITA_CARRELLO"
 			%>
 			<article class="product">
 				<header>
-					<a href="#" class="remove"> <img src="img/<%=p.getImmagine()%>"
+					<a href="carrelloservlet?cmd=removeprodotto&id=<%=p.getIdProdotto()%>" class="remove"> <img src="img/prodotti/<%=p.getImmagine()%>"
 						alt="">
 
 						<h3>Remove product</h3>
@@ -56,7 +56,7 @@ quantita = (ArrayList<Integer>) session.getAttribute("SESSION_QUANTITA_CARRELLO"
 				</div>
 
 				<footer class="content">
-					<span class="qt">QuantitÃ :</span> <span class="qt"><%=quantita.get(i)%></span>
+					<span class="qt">Quantità :</span> <span class="qt"><%=quantita.get(i)%></span>
 
 					<h2 class="full-price">
 						€<%=p.getPrezzo() * quantita.get(i)%></h2>

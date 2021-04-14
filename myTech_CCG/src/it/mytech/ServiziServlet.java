@@ -34,7 +34,7 @@ public class ServiziServlet extends HttpServlet {
 
 		if (comando != null) {
 			if (comando.equals("viewall")) {
-				System.out.println("ciao");
+				// System.out.println("ciao");
 				try {
 					ArrayList<Prodotto> elenco = new ArrayList<Prodotto>();
 					DBManager db = new DBManager();
@@ -68,7 +68,7 @@ public class ServiziServlet extends HttpServlet {
 			request.getSession().setAttribute("CATEGORIA", value);
 			if (value.equals("1")) {
 				try {
-					System.out.println(value);
+					// System.out.println(value);
 					ArrayList<Prodotto> elenco = new ArrayList<Prodotto>();
 					DBManager db = new DBManager();
 					elenco = db.getHardware();
@@ -80,7 +80,7 @@ public class ServiziServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} else {
+			} else if (value.equals("2")) {
 				try {
 					ArrayList<Prodotto> elenco = new ArrayList<Prodotto>();
 					DBManager db = new DBManager();
@@ -88,6 +88,19 @@ public class ServiziServlet extends HttpServlet {
 					db.close();
 
 					request.getSession().removeAttribute("ELENCO_PRODOTTI");
+					request.getSession().setAttribute("ELENCO_PRODOTTI", elenco);
+					response.sendRedirect("servizi.jsp");
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					ArrayList<Prodotto> elenco = new ArrayList<Prodotto>();
+					DBManager db = new DBManager();
+					elenco = db.getProdotti();
+					db.close();
+
 					request.getSession().setAttribute("ELENCO_PRODOTTI", elenco);
 					response.sendRedirect("servizi.jsp");
 
