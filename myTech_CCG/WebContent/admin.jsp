@@ -4,6 +4,7 @@
 <%!int tipo;
 	String nome;%>
 <%
+//commento
 	try {
 	nome = (String) session.getAttribute("SESSION_USERNAME");
 	if (nome == null)
