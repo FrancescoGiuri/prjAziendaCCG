@@ -89,6 +89,7 @@ try {
 
 			<nav id="nav-menu-container">
 				<ul class="nav-menu">
+
 					<li class="menu-active"><a href="#intro">Home</a></li>
 					<li><a href="#about">About Us</a></li>
 					<li><a href="#services">Servizi</a></li>
@@ -115,6 +116,9 @@ try {
 					<%
 						}
 					%>
+					<li><a href="#"><img src="img/italy.jpg"></a></li>
+					<li><a href="#"><img src="img/inglese.jpg"></a></li>
+					<li><a href="#"><img src="img/francese.png"></a></li>
 				</ul>
 			</nav>
 			<!-- #nav-menu-container -->
