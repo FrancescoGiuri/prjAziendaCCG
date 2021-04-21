@@ -42,7 +42,7 @@ public class DBManager {
 
 	public Amministratore getAmministratore(String email) throws Exception {
 		Amministratore a = new Amministratore();
-		String sqlSelect = "SELECT * FROM DIPENDENTE WHERE EMAIL='" + email + "';";
+		String sqlSelect = "SELECT * FROM AMMINISTRATORE WHERE EMAIL='" + email + "';";
 		rs = query.executeQuery(sqlSelect);
 		if (rs.next())
 			a = new Amministratore(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
@@ -245,6 +245,21 @@ public class DBManager {
 		pstm.setString(3, ora);
 		pstm.setString(4, messaggio);
 		pstm.setInt(5, idCliente);
+		pstm.executeUpdate();
+	}
+
+	public void addProdotto(Prodotto p) throws Exception {
+		PreparedStatement pstm;
+		String sql = "INSERT INTO PRODOTTO VALUES (?,?,?,?,?,?,?,?);";
+		pstm = connessione.prepareStatement(sql);
+		pstm.setInt(1, p.getIdProdotto());
+		pstm.setString(2, p.getNome());
+		pstm.setString(3, p.getDescrizione());
+		pstm.setInt(4, p.getTipo());
+		pstm.setString(5, p.getMarca());
+		pstm.setFloat(6, p.getPrezzo());
+		pstm.setInt(7, p.getDisponibilità());
+		pstm.setString(8, p.getImmagine());
 		pstm.executeUpdate();
 	}
 

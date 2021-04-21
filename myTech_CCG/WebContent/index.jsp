@@ -14,6 +14,8 @@ numClienti = (Integer) request.getServletContext().getAttribute("SESSION_NUM_CLI
 numOrdini = (Integer) request.getServletContext().getAttribute("SESSION_NUM_ORDINI");
 try {
 	tipo = (Integer) session.getAttribute("SESSION_USER_TYPE");
+	if (tipo == 1 || tipo == 2)
+		session.setAttribute("SESSION_USERNAME", null);
 	nome = (String) session.getAttribute("SESSION_USERNAME");
 	if (nome == null)
 		nome = "";

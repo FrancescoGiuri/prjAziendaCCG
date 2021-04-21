@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 				if (tipo == 3)
 					response.sendRedirect(request.getParameter("from"));
 				else
-					response.sendRedirect("admin.html");
+					response.sendRedirect("admin.jsp");
 			} else {
 				request.getSession().setAttribute("SESSION_USERNAME", "");
 				response.sendRedirect("login.jsp");

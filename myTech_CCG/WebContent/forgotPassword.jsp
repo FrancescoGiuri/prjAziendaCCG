@@ -35,7 +35,7 @@
 				</div>
 
 				<form class="login100-form validate-form" action="resend"
-					method="POST">
+					method="GET">
 					<br> <br> <br> <br> <span
 						class="login100-form-title"> Recupera le tue credenziali! </span>
 
