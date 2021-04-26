@@ -78,17 +78,19 @@ application.setAttribute("LOCALE_KEY", locale);
 					<div class="wrap-input100 validate-input"
 						data-validate="Nome azienda">
 						<input class="input100" type="text" name="nome"
-							placeholder="Nome azienda/cliente"> <span
-							class="focus-input100"></span> <span class="symbol-input100">
+							placeholder="<fmt:message
+							key="nomeazienda" bundle="${resourceBundle}" />">
+						<span class="focus-input100"></span> <span class="symbol-input100">
 							<i class="fa fa-address-book" aria-hidden="true"></i>
 						</span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Indirizzo">
 						<input class="input100" type="text" name="indirizzo"
-							placeholder="Indirizzo"> <span class="focus-input100"></span>
-						<span class="symbol-input100"> <i class="fa fa-map-marker"
-							aria-hidden="true"></i>
+							placeholder="<fmt:message
+							key="indirizzo" bundle="${resourceBundle}" />">
+						<span class="focus-input100"></span> <span class="symbol-input100">
+							<i class="fa fa-map-marker" aria-hidden="true"></i>
 						</span>
 					</div>
 
@@ -104,7 +106,8 @@ application.setAttribute("LOCALE_KEY", locale);
 					<div class="wrap-input100 validate-input"
 						data-validate="Inserisci una password">
 						<input class="input100" type="password" name="passConferma"
-							placeholder="Ripeti password"> <span
+							placeholder="<fmt:message
+							key="ripetipassword" bundle="${resourceBundle}" />"> <span
 							class="focus-input100"></span> <span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
