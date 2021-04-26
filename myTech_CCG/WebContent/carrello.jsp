@@ -7,7 +7,7 @@
 	Prodotto p;
 	float totale;%>
 <%
-	totale = 0;
+	totale = 0; //costo
 elenco = (ArrayList<Prodotto>) session.getAttribute("SESSION_PRODOTTI_CARRELLO");
 quantita = (ArrayList<Integer>) session.getAttribute("SESSION_QUANTITA_CARRELLO");
 %>

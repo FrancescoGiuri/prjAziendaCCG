@@ -11,7 +11,7 @@
 		<jstl.version>1.2</jstl.version>
 	</properties>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/com.github.dhorions/boxable -->
+		<!-- https://mvnrepository.com/artifact/com.github.dhorions/boxable x-->
 		<dependency>
 			<groupId>com.github.dhorions</groupId>
 			<artifactId>boxable</artifactId>

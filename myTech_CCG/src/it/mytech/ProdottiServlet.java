@@ -28,7 +28,7 @@ public class ProdottiServlet extends HttpServlet {
 	 */
 	public ProdottiServlet() {
 		super();
-		// TODO Auto-generated constructor stub
+		// TODO Auto-generated constructor stub 
 	}
 
 	/**
