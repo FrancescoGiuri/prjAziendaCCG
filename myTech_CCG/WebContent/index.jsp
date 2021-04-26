@@ -115,7 +115,7 @@ try {
 								if (tipo == 3) {
 							%>
 							<li><a href="carrello.jsp"><fmt:message key="carrello"
-								bundle="${resourceBundle}" /></a></li>
+										bundle="${resourceBundle}" /></a></li>
 							<%
 								}
 							%>
@@ -672,7 +672,8 @@ try {
 							<li><i class="ion-ios-arrow-right"></i> <a href="#intro">Home</a></li>
 							<li><i class="ion-ios-arrow-right"></i> <a href="#about">About
 									us</a></li>
-							<li><i class="ion-ios-arrow-right"></i> <a href="#services">Servizi</a></li>
+							<li><i class="ion-ios-arrow-right"></i> <a href="#services"><fmt:message
+										key="servizi" bundle="${resourceBundle}" /></a></li>
 						</ul>
 					</div>
 

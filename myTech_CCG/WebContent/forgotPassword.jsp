@@ -1,3 +1,11 @@
+<%@ page language="java" import="it.mytech.*"
+	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%!String locale;%>
+<%
+	locale = request.getParameter("locale");
+application.setAttribute("LOCALE_KEY", locale);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +34,9 @@
 <!--===============================================================================================-->
 </head>
 <body>
-
+	<fmt:setLocale value="<%=locale%>" />
+	<fmt:setBundle basename="it.mytech.bundle.messages"
+		var="resourceBundle" />
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100-forgot">
@@ -37,7 +47,8 @@
 				<form class="login100-form validate-form" action="resend"
 					method="GET">
 					<br> <br> <br> <br> <span
-						class="login100-form-title"> Recupera le tue credenziali! </span>
+						class="login100-form-title"><fmt:message key="recupera"
+							bundle="${resourceBundle}" /></span>
 
 					<div class="wrap-input100 validate-input"
 						data-validate="Inserisci un'email valida">
@@ -49,16 +60,18 @@
 					</div>
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" type="submit">Invia
-							email</button>
+						<button class="login100-form-btn" type="submit">
+							<fmt:message key="inviaemail" bundle="${resourceBundle}" />
+						</button>
 					</div>
 
 					<div class="text-center p-t-12">
 						<a class="txt2" href="index.jsp"> Home</a> &nbsp&nbsp/&nbsp&nbsp<a
-							class="txt2" href="login.jsp"> Accedi </a> &nbsp&nbsp/&nbsp&nbsp
-						<a class="txt2" href="registrazione.jsp"> Crea un account <i
-							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-						</a>
+							class="txt2" href="login.jsp"> <fmt:message key="accedi2"
+								bundle="${resourceBundle}" />
+						</a> &nbsp&nbsp/&nbsp&nbsp <a class="txt2" href="registrazione.jsp"><fmt:message
+								key="crea" bundle="${resourceBundle}" /><i
+							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i> </a>
 					</div>
 				</form>
 			</div>

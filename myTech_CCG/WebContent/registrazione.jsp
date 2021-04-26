@@ -1,3 +1,11 @@
+<%@ page language="java" import="it.mytech.*"
+	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%!String locale;%>
+<%
+	locale = request.getParameter("locale");
+application.setAttribute("LOCALE_KEY", locale);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +51,9 @@
 </script>
 
 <body>
-
+	<fmt:setLocale value="<%=locale%>" />
+	<fmt:setBundle basename="it.mytech.bundle.messages"
+		var="resourceBundle" />
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100-registrazione">
@@ -53,8 +63,8 @@
 
 				<form class="login100-form validate-form" method="POST"
 					name="registrazione">
-					<span class="login100-form-title"> Registrati nel mondo di
-						myTech! </span>
+					<span class="login100-form-title"><fmt:message
+							key="registrati" bundle="${resourceBundle}" /></span>
 
 					<div class="wrap-input100 validate-input"
 						data-validate="Inserisci un'email valida">
@@ -109,9 +119,9 @@
 						<a class="txt2" href="index.jsp"> Home</a> &nbsp&nbsp/&nbsp&nbsp<span
 							class="txt1"> Forgot </span> <a class="txt2"
 							href="forgotPassword.jsp"> Password? </a> &nbsp&nbsp/&nbsp&nbsp <a
-							class="txt2" href="login.jsp"> Accedi <i
-							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-						</a>
+							class="txt2" href="login.jsp"><fmt:message key="accedi2"
+								bundle="${resourceBundle}" /><i
+							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i> </a>
 					</div>
 				</form>
 			</div>

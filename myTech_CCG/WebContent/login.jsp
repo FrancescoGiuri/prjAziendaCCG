@@ -1,3 +1,11 @@
+<%@ page language="java" import="it.mytech.*"
+	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%!String locale;%>
+<%
+	locale = request.getParameter("locale");
+application.setAttribute("LOCALE_KEY", locale);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +34,9 @@
 <!--===============================================================================================-->
 </head>
 <body>
-
+	<fmt:setLocale value="<%=locale%>" />
+	<fmt:setBundle basename="it.mytech.bundle.messages"
+		var="resourceBundle" />
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
@@ -37,8 +47,8 @@
 				<form action="login" method="POST"
 					class="login100-form validate-form">
 					<input type="hidden" name="from" value="${param.from}"> <br>
-					<br> <span class="login100-form-title"> Effettua il
-						login a myTech! </span>
+					<br> <span class="login100-form-title"><fmt:message
+							key="registrati" bundle="${resourceBundle}" /> </span>
 
 					<div class="wrap-input100 validate-input"
 						data-validate="Inserisci un'email valida">
@@ -57,11 +67,15 @@
 							aria-hidden="true"></i>
 						</span>
 					</div>
-					<center>Accedi come</center>
+					<center>
+						<fmt:message key="accedi" bundle="${resourceBundle}" />
+					</center>
 					<center>
 						<input type="radio" name="tipo" value=3 checked>
-						Cliente/Azienda &nbsp <input type="radio" name="tipo" value=1>
-						Manager/Dipendente &nbsp
+						<fmt:message key="accesso" bundle="${resourceBundle}" />
+						&nbsp <input type="radio" name="tipo" value=1>
+						<fmt:message key="accesso2" bundle="${resourceBundle}" />
+						&nbsp
 
 					</center>
 					<div class="container-login100-form-btn">
@@ -72,9 +86,9 @@
 						<a class="txt2" href="index.jsp"> Home</a> &nbsp&nbsp/&nbsp&nbsp <span
 							class="txt1"> Forgot </span> <a class="txt2"
 							href="forgotPassword.jsp"> Password? </a> &nbsp&nbsp/&nbsp&nbsp <a
-							class="txt2" href="registrazione.jsp"> Crea un account <i
-							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-						</a>
+							class="txt2" href="registrazione.jsp"><fmt:message key="crea"
+								bundle="${resourceBundle}" /> <i
+							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i> </a>
 					</div>
 				</form>
 			</div>

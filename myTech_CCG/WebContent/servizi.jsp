@@ -1,14 +1,17 @@
 <%@ page language="java" import="java.util.*,it.mytech.*"
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%!ArrayList<Prodotto> elenco;
 	int i;
 	int tipo;
 	Prodotto p;
 	String nome;
-	String categoria;%>
+	String categoria;
+	String locale;%>
 <%
-	elenco = (ArrayList<Prodotto>) session.getAttribute("ELENCO_PRODOTTI");
+	locale = request.getParameter("locale");
+application.setAttribute("LOCALE_KEY", locale);
+elenco = (ArrayList<Prodotto>) session.getAttribute("ELENCO_PRODOTTI");
 categoria = (String) session.getAttribute("CATEGORIA");
 if (categoria == null)
 	categoria = "";
@@ -73,7 +76,9 @@ try {
 </head>
 
 <body>
-
+	<fmt:setLocale value="<%=locale%>" />
+	<fmt:setBundle basename="it.mytech.bundle.messages"
+		var="resourceBundle" />
 	<!--==========================
     Header
   ============================-->
@@ -92,8 +97,10 @@ try {
 				<ul class="nav-menu">
 					<li><a href="index.jsp#intro">Home</a></li>
 					<li><a href="index.jsp#about">About Us</a></li>
-					<li class="menu-active"><a href="index.jsp#services">Servizi</a></li>
-					<li><a href="index.jsp#contact1">Contatti</a></li>
+					<li class="menu-active"><a href="index.jsp#services"><fmt:message
+								key="servizimenu" bundle="${resourceBundle}" /></a></li>
+					<li><a href="index.jsp#contact1"><fmt:message
+								key="contattigiu" bundle="${resourceBundle}" /></a></li>
 
 					<%
 						if (nome.equals("")) {
@@ -107,7 +114,8 @@ try {
 							<%
 								if (tipo == 3) {
 							%>
-							<li><a href="carrello.jsp">Carrello</a></li>
+							<li><a href="carrello.jsp"><fmt:message key="carrello"
+										bundle="${resourceBundle}" />Carrello</a></li>
 							<%
 								}
 							%>
@@ -136,8 +144,9 @@ try {
 				<h3>Shop</h3>
 			</header>
 			<form action="servizi?cmd=categoria" method="GET">
-				<p style="float: left">Ecco tutti i nostri prodotti. Usa il
-					filtro per dividerli in categorie</p>
+				<p style="float: left">
+					<fmt:message key="elencoprodotti" bundle="${resourceBundle}" />
+				</p>
 				&nbsp&nbsp&nbsp&nbsp <i class="fa fa-arrow-right" aria-hidden="true"></i>
 				<div style="float: right">
 					<a href="carrello.jsp"><input class="cart" type="button"
@@ -146,11 +155,13 @@ try {
 
 				<div class="select">
 					<select name="slct" id="slct" onchange="submit()">
-						<option <%if (categoria.equals("")) {%> selected <%}%> disabled>Seleziona
-							categoria</option>
+						<option <%if (categoria.equals("")) {%> selected <%}%> disabled><fmt:message
+								key="selezionacategoria" bundle="${resourceBundle}" />
+						</option>
 						<option <%if (categoria.equals("1")) {%> selected <%}%> value="1">Hardware</option>
 						<option <%if (categoria.equals("2")) {%> selected <%}%> value="2">Software</option>
-						<option <%if (categoria.equals("3")) {%> selected <%}%> value="3">Tutti</option>
+						<option <%if (categoria.equals("3")) {%> selected <%}%> value="3"><fmt:message
+								key="all" bundle="${resourceBundle}" /></option>
 					</select>
 				</div>
 			</form>
@@ -167,7 +178,7 @@ try {
 						<div class="img">
 							<img src="img/prodotti/<%=p.getImmagine()%>" alt=""
 								class="img-fluid">
-								
+
 							<div class="icon">
 								<i class="fa fa-info"></i>
 							</div>
@@ -204,24 +215,30 @@ try {
 					</div>
 
 					<div class="col-lg-3 col-md-6 footer-links">
-						<h4>Link utili</h4>
+						<h4>
+							<fmt:message key="link" bundle="${resourceBundle}" />
+						</h4>
 						<ul>
 							<li><i class="ion-ios-arrow-right"></i> <a
 								href="index.jsp#intro">Home</a></li>
 							<li><i class="ion-ios-arrow-right"></i> <a
 								href="index.jsp#about">About us</a></li>
 							<li><i class="ion-ios-arrow-right"></i> <a
-								href="index.jsp#services">Servizi</a></li>
-							<li><i class="ion-ios-arrow-right"></i> <a href="#">Privacy
-									policy</a></li>
+								href="index.jsp#services"><fmt:message key="servizimenu"
+										bundle="${resourceBundle}" /></a></li>
 						</ul>
 					</div>
 
 					<div class="col-lg-3 col-md-6 footer-contact">
-						<h4>Contatti</h4>
+						<h4>
+							<fmt:message key="contattigiu" bundle="${resourceBundle}" />
+						</h4>
 						<p>
-							via Roma <br> Torino (TO)<br> <strong>Telefono:</strong>
-							+39 392 421 7260<br> <strong>Email:</strong>
+							<fmt:message key="indirizzogiu" bundle="${resourceBundle}" />
+							<br>
+							<fmt:message key="paese" bundle="${resourceBundle}" />
+							<br> <strong><fmt:message key="telefono"
+									bundle="${resourceBundle}" />:</strong> +39 392 421 7260<br> <strong>Email:</strong>
 							mytech.ccg@gmail.com<br>
 						</p>
 
