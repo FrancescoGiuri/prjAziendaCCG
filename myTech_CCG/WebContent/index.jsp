@@ -40,7 +40,7 @@ try {
 <meta content="" name="keywords">
 <meta content="" name="description">
 
-<!-- Favicons -->
+<!-- Favicons 2-->
 <link href="img/favicon2.png" rel="icon">
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
