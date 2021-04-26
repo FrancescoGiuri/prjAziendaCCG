@@ -24,7 +24,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>myTech-Dipendenti</title>
+<title>myTech-Prodotti</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -115,8 +115,8 @@
 		url="jdbc:mysql://localhost:3306/myTech?serverTimezone=UTC"
 		user="root" password="" />
 
-	<sql:query var="Dipendenti" dataSource="${myDS}">
-        SELECT * FROM AMMINISTRATORE WHERE MANAGER=0;
+	<sql:query var="Prodotti" dataSource="${myDS}">
+        SELECT * FROM PRODOTTO;
     </sql:query>
 
 
@@ -135,7 +135,7 @@
 		<ul class="nav-menu">
 			<li><a href="dipendenti.jsp">Dipendenti</a></li>
 			<li><a href="prodotti.jsp">Prodotti</a></li>
-			<li><a href="">Ordini</a></li>
+			<li><a href="ordini.jsp">Ordini</a></li>
 			<li><a href="">Clienti</a></li>
 			<li><a href="">Prenotazioni</a></li>
 
@@ -161,54 +161,71 @@
 		<center>
 
 			<header class="section-header wow fadeInUp">
-			<h3>Gestione Dipendenti</h3>
+			<h3>Gestione Prodotti</h3>
 			</header>
 			<br> <br> <br>
 
 
-			<form action="dipendenti?cmd=modifica" method="POST">
+			<form action="prodotti?cmd=modifica" method="POST">
 				<table id="example" class="display" style="width: 100%" border="1"
 					cellpadding="5">
 					<thead>
 						<tr>
 							<th>Modifica record</th>
 							<th>ID</th>
-							<th>Cognome</th>
 							<th>Nome</th>
-							<th>Email</th>
-							<th>Ruolo</th>
-							<th>Stipendio</th>
+							<th>Descrizione</th>
+							<th>Tipo</th>
+							<th>Marca</th>
+							<th>Prezzo</th>
+							<th>Disponibilità</th>
 							<th>Elimina record</th>
 						</tr>
 					</thead>
 					<tbody>
 
-						<c:forEach var="dipendente" items="${Dipendenti.rows}">
+						<c:forEach var="prodotto" items="${Prodotti.rows}">
 
 							<tr>
 								<td><input type="button" value="Modifica" class="btn"
 									style="float: left" onclick="submit()"></td>
 								<td><input type="hidden" name="id"
-									value="<c:out value="${dipendente.id}"/>"> <c:out
-										value="${dipendente.id}" /></td>
-								<td><textarea name="cognome" cols="20" rows="1"><c:out
-											value="${dipendente.cognome}" /></textarea></td>
+									value="<c:out value="${prodotto.idProdotto}"/>"> <c:out
+										value="${prodotto.idProdotto}" /></td>
 								<td><textarea name="nome" cols="20" rows="1"><c:out
-											value="${dipendente.nome}" /></textarea></td>
-								<td><textarea name="email" cols="20" rows="1"><c:out
-											value="${dipendente.email}" /></textarea></td>
-								<td><textarea name="ruolo" cols="20" rows="1"><c:out
-											value="${dipendente.ruolo}" /></textarea></td>
-								<td>€ <input type="number" name="stipendio"
-									style="width: 100px;"
+											value="${prodotto.nome}" /></textarea></td>
+								<td><textarea name="descrizione" cols="20" rows="1"><c:out
+											value="${prodotto.descrizione}" /></textarea></td>
+								<td><select class="custom-select" name="tipo"
+									style="width: 150px;">
+										<c:choose>
+											<c:when test="${prodotto.tipo==1}">
+												<option value="1" selected>Hardware</option>
+												<option value="2">Software</option>
+											</c:when>
+											<c:otherwise>
+												<option value="1">Hardware</option>
+												<option value="2" selected>Software</option>
+											</c:otherwise>
+										</c:choose>
+								</select></td>
+								<td><textarea name="marca" cols="20" rows="1"><c:out
+											value="" /><c:out value="${prodotto.marca}" /></textarea></td>
+								<td>€ <input type="number" name="prezzo"
 									value="<c:out
-											value="" /><c:out value="${prodotto.marca}" />"></td>
+											value="${prodotto.prezzo}" />"
+									min="0" style="width: 100px;"></td>
+								<td><input type="number" name="disponibilita"
+									value="<c:out value="${prodotto.disponibilità}"/>"
+									style="width: 50px;"></td>
 								<td><a
 									href="prodotti?cmd=elimina&id=${prodotto.idProdotto}"><input
 										type="button" value="Elimina" class="btn2"
 										style="float: right"></a></td>
 							</tr>
+
 						</c:forEach>
+
 					</tbody>
 				</table>
 			</form>

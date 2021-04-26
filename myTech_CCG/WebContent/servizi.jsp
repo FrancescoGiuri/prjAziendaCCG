@@ -145,7 +145,7 @@ try {
 				</div>
 
 				<div class="select">
-					<select name="slct" onchange="submit()">
+					<select name="slct" id="slct" onchange="submit()">
 						<option <%if (categoria.equals("")) {%> selected <%}%> disabled>Seleziona
 							categoria</option>
 						<option <%if (categoria.equals("1")) {%> selected <%}%> value="1">Hardware</option>

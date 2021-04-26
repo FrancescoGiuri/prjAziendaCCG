@@ -1,17 +1,23 @@
 <%@ page language="java" import="it.mytech.*"
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 <%!int tipo;
 	String nome;
 	int numDipendenti;
 	int numClienti;
 	int numOrdini;
-	DBManager db;%>
+	DBManager db;
+	String locale;%>
 <%
-	db = new DBManager();
+	locale = request.getParameter("locale");
+application.setAttribute("LOCALE_KEY", locale);
+db = new DBManager();
 numDipendenti = (Integer) request.getServletContext().getAttribute("SESSION_NUM_DIPENDENTI");
 numClienti = (Integer) request.getServletContext().getAttribute("SESSION_NUM_CLIENTI");
 numOrdini = (Integer) request.getServletContext().getAttribute("SESSION_NUM_ORDINI");
+
 try {
 	tipo = (Integer) session.getAttribute("SESSION_USER_TYPE");
 	if (tipo == 1 || tipo == 2)
@@ -72,7 +78,9 @@ try {
 </script>
 
 <body>
-
+	<fmt:setLocale value="<%=locale%>" />
+	<fmt:setBundle basename="it.mytech.bundle.messages"
+		var="resourceBundle" />
 	<!--==========================
     Header
   ============================-->
@@ -83,8 +91,6 @@ try {
 				<h1>
 					<a href="#intro" class="scrollto">myTech</a>
 				</h1>
-				<!-- Uncomment below if you prefer to use an image logo -->
-				<!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
 			</div>
 
 			<nav id="nav-menu-container">
@@ -92,8 +98,10 @@ try {
 
 					<li class="menu-active"><a href="#intro">Home</a></li>
 					<li><a href="#about">About Us</a></li>
-					<li><a href="#services">Servizi</a></li>
-					<li><a href="#contact">Contatti</a></li>
+					<li><a href="#services"><fmt:message key="servizimenu"
+								bundle="${resourceBundle}" /></a></li>
+					<li><a href="#contact"><fmt:message key="contattigiu"
+								bundle="${resourceBundle}" /></a></li>
 					<%
 						if (nome.equals("")) {
 					%>
@@ -106,7 +114,8 @@ try {
 							<%
 								if (tipo == 3) {
 							%>
-							<li><a href="carrello.jsp">Carrello</a></li>
+							<li><a href="carrello.jsp"><fmt:message key="carrello"
+								bundle="${resourceBundle}" /></a></li>
 							<%
 								}
 							%>
@@ -116,9 +125,14 @@ try {
 					<%
 						}
 					%>
-					<li><a href="#"><img src="img/italy.jpg"></a></li>
-					<li><a href="#"><img src="img/inglese.jpg"></a></li>
-					<li><a href="#"><img src="img/francese.png"></a></li>
+					<li><a href="index.jsp?locale=it_IT"><img
+							src="img/italy.jpg"></a></li>
+					<li><a href="index.jsp?locale=en_US"><img
+							src="img/inglese.jpg"></a></li>
+					<li><a href="index.jsp?locale=fr_FR"><img
+							src="img/francese.png"></a></li>
+					<li><a href="index.jsp?locale=es_US"><img
+							src="img/spagna.jpg"></a></li>
 				</ul>
 			</nav>
 			<!-- #nav-menu-container -->
@@ -144,10 +158,14 @@ try {
 						</div>
 						<div class="carousel-container">
 							<div class="carousel-content">
-								<h2>Entra nel Tech...con myTech!</h2>
-								<p>La professionalità  è alla base del nostro lavoro.</p>
-								<a href="#about" class="btn-get-started scrollto">Naviga in
-									myTech</a>
+								<h2>
+									<fmt:message key="frase1" bundle="${resourceBundle}" />
+								</h2>
+								<p>
+									<fmt:message key="frase2" bundle="${resourceBundle}" />
+								</p>
+								<a href="#about" class="btn-get-started scrollto"><fmt:message
+										key="frase3" bundle="${resourceBundle}" /></a>
 							</div>
 						</div>
 					</div>
@@ -158,10 +176,14 @@ try {
 						</div>
 						<div class="carousel-container">
 							<div class="carousel-content">
-								<h2>Entra nel Tech...con myTech!</h2>
-								<p>La professionalità  è alla base del nostro lavoro.</p>
-								<a href="#about" class="btn-get-started scrollto">Naviga in
-									myTech</a>
+								<h2>
+									<fmt:message key="frase1" bundle="${resourceBundle}" />
+								</h2>
+								<p>
+									<fmt:message key="frase2" bundle="${resourceBundle}" />
+								</p>
+								<a href="#about" class="btn-get-started scrollto"><fmt:message
+										key="frase3" bundle="${resourceBundle}" /></a>
 							</div>
 						</div>
 					</div>
@@ -172,10 +194,14 @@ try {
 						</div>
 						<div class="carousel-container">
 							<div class="carousel-content">
-								<h2>Entra nel Tech...con myTech!</h2>
-								<p>La professionalità  è alla base del nostro lavoro.</p>
-								<a href="#about" class="btn-get-started scrollto">Naviga in
-									myTech</a>
+								<h2>
+									<fmt:message key="frase1" bundle="${resourceBundle}" />
+								</h2>
+								<p>
+									<fmt:message key="frase2" bundle="${resourceBundle}" />
+								</p>
+								<a href="#about" class="btn-get-started scrollto"><fmt:message
+										key="frase3" bundle="${resourceBundle}" /></a>
 							</div>
 						</div>
 					</div>
@@ -186,10 +212,14 @@ try {
 						</div>
 						<div class="carousel-container">
 							<div class="carousel-content">
-								<h2>Entra nel Tech...con myTech!</h2>
-								<p>La professionalità  è alla base del nostro lavoro.</p>
-								<a href="#about" class="btn-get-started scrollto">Naviga in
-									myTech</a>
+								<h2>
+									<fmt:message key="frase1" bundle="${resourceBundle}" />
+								</h2>
+								<p>
+									<fmt:message key="frase2" bundle="${resourceBundle}" />
+								</p>
+								<a href="#about" class="btn-get-started scrollto"><fmt:message
+										key="frase3" bundle="${resourceBundle}" /></a>
 							</div>
 						</div>
 					</div>
@@ -200,10 +230,14 @@ try {
 						</div>
 						<div class="carousel-container">
 							<div class="carousel-content">
-								<h2>Entra nel Tech...con myTech!</h2>
-								<p>La professionalità  è alla base del nostro lavoro.</p>
-								<a href="#about" class="btn-get-started scrollto">Naviga in
-									myTech</a>
+								<h2>
+									<fmt:message key="frase1" bundle="${resourceBundle}" />
+								</h2>
+								<p>
+									<fmt:message key="frase2" bundle="${resourceBundle}" />
+								</p>
+								<a href="#about" class="btn-get-started scrollto"><fmt:message
+										key="frase3" bundle="${resourceBundle}" /></a>
 							</div>
 						</div>
 					</div>
@@ -226,35 +260,7 @@ try {
 	<!-- #intro -->
 
 	<main id="main">
-
-		<!--==========================
-      Featured Services Section
-    ============================
-    <section id="featured-services">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-4 box">
-            <i class="ion-ios-bookmarks-outline"></i>
-            <h4 class="title"><a href="">Lorem Ipsum Delino</a></h4>
-            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-          </div>
-
-          <div class="col-lg-4 box box-bg">
-            <i class="ion-ios-stopwatch-outline"></i>
-            <h4 class="title"><a href="">Dolor Sitema</a></h4>
-            <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-          </div>
-
-          <div class="col-lg-4 box">
-            <i class="ion-ios-heart-outline"></i>
-            <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-            <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-          </div>
-
-        </div>
-      </div>
-    </section> #featured-services -->
+		F
 
 		<!--==========================
       About Us Section
@@ -263,9 +269,12 @@ try {
 			<div class="container">
 
 				<header class="section-header">
-					<h3>About Us</h3>
-					<p>myTech è un'azienda che offre fornitura hardware e software.
-						Conosci il nostro team!</p>
+					<h3>
+						<fmt:message key="about" bundle="${resourceBundle}" />
+					</h3>
+					<p>
+						<fmt:message key="about2" bundle="${resourceBundle}" />
+					</p>
 				</header>
 				<div class="row">
 
@@ -333,50 +342,7 @@ try {
 					</div>
 
 				</div>
-				<!--
-        <div class="row about-cols">
 
-          <div class="col-md-4 wow fadeInUp">
-            <div class="about-col">
-              <div class="img">
-                <img src="img/about-mission.jpg" alt="" class="img-fluid">
-                <div class="icon"><i class="ion-ios-speedometer-outline"></i></div>
-              </div>
-              <h2 class="title"><a href="#">Our Mission</a></h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              </p>
-            </div>
-          </div>
-
-          <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="about-col">
-              <div class="img">
-                <img src="img/about-plan.jpg" alt="" class="img-fluid">
-                <div class="icon"><i class="ion-ios-list-outline"></i></div>
-              </div>
-              <h2 class="title"><a href="#">Our Plan</a></h2>
-              <p>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem  doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-              </p>
-            </div>
-          </div>
-
-          <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="about-col">
-              <div class="img">
-                <img src="img/about-vision.jpg" alt="" class="img-fluid">
-                <div class="icon"><i class="ion-ios-eye-outline"></i></div>
-              </div>
-              <h2 class="title"><a href="#">Our Vision</a></h2>
-              <p>
-                Nemo enim ipsam voluptatem quia voluptas sit aut odit aut fugit, sed quia magni dolores eos qui ratione voluptatem sequi nesciunt Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      -->
 			</div>
 		</section>
 		<!-- #about -->
@@ -388,46 +354,15 @@ try {
 			<div class="container">
 
 				<header class="section-header wow fadeInUp">
-					<h3>I nostri servizi</h3>
-					<p>Quali servizi offre esattamente myTech? Scoprili qui!</p>
+					<h3>
+						<fmt:message key="servizi" bundle="${resourceBundle}" />
+					</h3>
+					<p>
+						<fmt:message key="servizi2" bundle="${resourceBundle}" />
+					</p>
 				</header>
 
-				<!--
-        <div class="row">
 
-          <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
-            <div class="icon"><i class="ion-ios-analytics-outline"></i></div>
-            <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-          </div>
-          <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
-            <div class="icon"><i class="ion-ios-bookmarks-outline"></i></div>
-            <h4 class="title"><a href="">Dolor Sitema</a></h4>
-            <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-          </div>
-          <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
-            <div class="icon"><i class="ion-ios-paper-outline"></i></div>
-            <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-            <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-          </div>
-          <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
-            <div class="icon"><i class="ion-ios-speedometer-outline"></i></div>
-            <h4 class="title"><a href="">Magni Dolores</a></h4>
-            <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-          </div>
-          <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
-            <div class="icon"><i class="ion-ios-barcode-outline"></i></div>
-            <h4 class="title"><a href="">Nemo Enim</a></h4>
-            <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-          </div>
-          <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
-            <div class="icon"><i class="ion-ios-people-outline"></i></div>
-            <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
-            <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
-          </div>
-
-        </div>
-        -->
 				<div class="row services-cols">
 
 					<div class="col-md-4 wow fadeInUp">
@@ -439,8 +374,9 @@ try {
 								</div>
 							</div>
 							<h2 class="title">Hardware</h2>
-							<p style="text-align: center">Visita il nostro shop hardware
-								ed effettua i tuoi acquisti!</p>
+							<p style="text-align: center">
+								<fmt:message key="hardware" bundle="${resourceBundle}" />
+							</p>
 						</div>
 					</div>
 
@@ -453,8 +389,9 @@ try {
 								</div>
 							</div>
 							<h2 class="title">Software</h2>
-							<p style="text-align: center">Trova il software che fa al
-								caso tuo o delle tua azienda!</p>
+							<p style="text-align: center">
+								<fmt:message key="software" bundle="${resourceBundle}" />
+							</p>
 						</div>
 					</div>
 
@@ -467,8 +404,10 @@ try {
 								</div>
 							</div>
 							<h2 class="title">Sito web</h2>
-							<p style="text-align: center">Commissionaci il sito web
-								ideale per la tua attività !</p>
+							<p style="text-align: center">
+								<fmt:message key="siti" bundle="${resourceBundle}" />
+
+							</p>
 						</div>
 					</div>
 
@@ -484,8 +423,11 @@ try {
     ============================-->
 		<section id="call-to-action" class="wow fadeIn">
 			<div class="container text-center">
-				<h3>Visualizza i nostri prodotti</h3>
-				<a class="cta-btn" href="servizi?cmd=viewall">Vai allo shop</a>
+				<h3>
+					<fmt:message key="shop" bundle="${resourceBundle}" />
+				</h3>
+				<a class="cta-btn" href="servizi?cmd=viewall"><fmt:message
+						key="shop2" bundle="${resourceBundle}" /></a>
 			</div>
 		</section>
 		<!-- #call-to-action -->
@@ -497,9 +439,12 @@ try {
 			<div class="container">
 
 				<header class="section-header">
-					<h3>Le nostre abilità </h3>
-					<p>Noi di myTech siamo sinceri e professionali. Ecco il nostro
-						livello di competenza nelle mansioni che puoi affidarci!</p>
+					<h3>
+						<fmt:message key="abilita" bundle="${resourceBundle}" />
+					</h3>
+					<p>
+						<fmt:message key="abilita2" bundle="${resourceBundle}" />
+					</p>
 				</header>
 
 				<div class="skills-content">
@@ -544,26 +489,36 @@ try {
 			<div class="container">
 
 				<header class="section-header">
-					<h3>Statistiche</h3>
-					<p>Ti presentiamo un'analisi delle nostre statistiche</p>
+					<h3>
+						<fmt:message key="statistiche" bundle="${resourceBundle}" />
+					</h3>
+					<p>
+						<fmt:message key="statistiche2" bundle="${resourceBundle}" />
+					</p>
 				</header>
 
 				<div class="row counters">
 
 					<div class="col-lg-3 col-6 text-center">
 						<span data-toggle="counter-up"><%=numClienti%></span>
-						<p>Clienti</p>
+						<p>
+							<fmt:message key="clienti" bundle="${resourceBundle}" />
+						</p>
 					</div>
 
 					<div class="col-lg-3 col-6 text-center">
 						<span data-toggle="counter-up"><%=numOrdini%></span>
-						<p>Ordini</p>
+						<p>
+							<fmt:message key="ordini" bundle="${resourceBundle}" />
+						</p>
 					</div>
 
 					<div class="col-lg-3 col-6 text-center">
 						<span data-toggle="counter-up"> <%=numDipendenti%>
 						</span>
-						<p>Dipendenti</p>
+						<p>
+							<fmt:message key="dipendenti" bundle="${resourceBundle}" />
+						</p>
 					</div>
 
 				</div>
@@ -586,9 +541,12 @@ try {
 			<div class="container">
 
 				<div class="section-header">
-					<h3>Contattaci</h3>
-					<p>Ecco le nostre informazioni di contatto. Puoi anche
-						contattarci compilando il modulo sotto.</p>
+					<h3>
+						<fmt:message key="contatti" bundle="${resourceBundle}" />
+					</h3>
+					<p>
+						<fmt:message key="contatti2" bundle="${resourceBundle}" />
+					</p>
 				</div>
 
 				<div class="row contact-info">
@@ -596,15 +554,21 @@ try {
 					<div class="col-md-4">
 						<div class="contact-address">
 							<i class="ion-ios-location-outline"></i>
-							<h3>Indirizzo</h3>
-							<address>via Roma, Torino (TO)</address>
+							<h3>
+								<fmt:message key="indirizzo" bundle="${resourceBundle}" />
+							</h3>
+							<address>
+								<fmt:message key="indirizzo2" bundle="${resourceBundle}" />
+							</address>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div class="contact-phone">
 							<i class="ion-ios-telephone-outline"></i>
-							<h3>Telefono</h3>
+							<h3>
+								<fmt:message key="telefono" bundle="${resourceBundle}" />
+							</h3>
 							<p>
 								<a href="tel:+393924217260">+39 392 421 7260</a>
 							</p>
@@ -626,15 +590,18 @@ try {
 				<div class="container">
 
 					<header class="section-header">
-						<p>Invia una richiesta di prenotazione!</p>
+						<p>
+							<fmt:message key="prenotazione" bundle="${resourceBundle}" />
+						</p>
 					</header>
 				</div>
 
 
 
 				<div class="form">
-					<div id="sendmessage">La tua richiesta di prenotazione è
-						stata inviata! Riceverai a breve una mail di avvenuta ricezione.</div>
+					<div id="sendmessage">
+						<fmt:message key="prenotazione2" bundle="${resourceBundle}" />
+					</div>
 					<!--<div id="errormessage">Errore! Messaggio non inviato.</div>-->
 					<form
 						action="<%if (!nome.equals("")) {%> prenotazione <%} else {%>
@@ -669,7 +636,9 @@ try {
 							<div class="validation"></div>
 						</div>
 						<div class="text-center">
-							<button type="submit">Invia</button>
+							<button type="submit">
+								<fmt:message key="invia" bundle="${resourceBundle}" />
+							</button>
 						</div>
 					</form>
 
@@ -696,22 +665,27 @@ try {
 					</div>
 
 					<div class="col-lg-3 col-md-6 footer-links">
-						<h4>Link utili</h4>
+						<h4>
+							<fmt:message key="link" bundle="${resourceBundle}" />
+						</h4>
 						<ul>
 							<li><i class="ion-ios-arrow-right"></i> <a href="#intro">Home</a></li>
 							<li><i class="ion-ios-arrow-right"></i> <a href="#about">About
 									us</a></li>
 							<li><i class="ion-ios-arrow-right"></i> <a href="#services">Servizi</a></li>
-							<li><i class="ion-ios-arrow-right"></i> <a href="#">Privacy
-									policy</a></li>
 						</ul>
 					</div>
 
 					<div class="col-lg-3 col-md-6 footer-contact">
-						<h4>Contatti</h4>
+						<h4>
+							<fmt:message key="contattigiu" bundle="${resourceBundle}" />
+						</h4>
 						<p>
-							via Roma <br> Torino (TO)<br> <strong>Telefono:</strong>
-							+39 392 421 7260<br> <strong>Email:</strong>
+							<fmt:message key="indirizzogiu" bundle="${resourceBundle}" />
+							<br>
+							<fmt:message key="paese" bundle="${resourceBundle}" />
+							<br> <strong><fmt:message key="telefono"
+									bundle="${resourceBundle}" />:</strong> +39 392 421 7260<br> <strong>Email:</strong>
 							mytech.ccg@gmail.com<br>
 						</p>
 
@@ -723,16 +697,6 @@ try {
 						</div>
 
 					</div>
-
-					<!--
-          <div class="col-lg-3 col-md-6 footer-newsletter">
-            <h4>Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna veniam enim veniam illum dolore legam minim quorum culpa amet magna export quem marada parida nodela caramase seza.</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit"  value="Subscribe">
-            </form>
-          </div>
-        -->
 				</div>
 			</div>
 		</div>
@@ -741,14 +705,7 @@ try {
 			<div class="copyright">
 				&copy; Copyright <strong>myTech</strong>. All Rights Reserved
 			</div>
-			<div class="credits">
-				<!--
-          All the links in the footer should remain intact.
-          You can delete the links only if you purchased the pro version.
-          Licensing information: https://bootstrapmade.com/license/
-          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=BizPage
-        -->
-			</div>
+			<div class="credits"></div>
 		</div>
 	</footer>
 	<!-- #footer -->

@@ -263,6 +263,96 @@ public class DBManager {
 		pstm.executeUpdate();
 	}
 
+	public void updateProduct(Prodotto p) throws Exception {
+		PreparedStatement pstm;
+		/*
+		 * String q = "SET FOREIGN_KEY_CHECKS=0"; query.executeQuery(q);
+		 */
+		String sql = "UPDATE PRODOTTO SET nome= ?, descrizione= ?, tipo=?, marca=?, prezzo=?,"
+				+ "disponibilità= ? WHERE idProdotto= ?;";
+		pstm = connessione.prepareStatement(sql);
+
+		pstm.setString(1, p.getNome());
+		pstm.setString(2, p.getDescrizione());
+		pstm.setInt(3, p.getTipo());
+		pstm.setString(4, p.getMarca());
+		pstm.setFloat(5, p.getPrezzo());
+		pstm.setInt(6, p.getDisponibilità());
+		pstm.setInt(7, p.getIdProdotto());
+
+		pstm.executeUpdate();
+	}
+
+	public void addDipendente(Amministratore a) throws Exception {
+		PreparedStatement pstm;
+		String sql = "INSERT INTO AMMINISTRATORE VALUES (?,?,?,?,?,?,?,?);";
+		pstm = connessione.prepareStatement(sql);
+		pstm.setInt(1, a.getId());
+		pstm.setString(2, a.getEmail());
+		pstm.setString(3, a.getPassword());
+		pstm.setString(4, a.getNome());
+		pstm.setString(5, a.getCognome());
+		pstm.setString(6, a.getRuolo());
+		pstm.setFloat(7, a.getStipendio());
+		pstm.setBoolean(8, a.isManager());
+		pstm.executeUpdate();
+	}
+
+	public void updateDipendente(Amministratore a) throws Exception {
+		PreparedStatement pstm;
+		String sql = "UPDATE AMMINISTRATORE SET cognome=?, nome= ?, email= ?, ruolo=?, stipendio=?" + " WHERE id= ?;";
+		pstm = connessione.prepareStatement(sql);
+
+		pstm.setString(1, a.getCognome());
+		pstm.setString(2, a.getNome());
+		pstm.setString(3, a.getEmail());
+		pstm.setString(4, a.getRuolo());
+		pstm.setFloat(5, a.getStipendio());
+		pstm.setInt(6, a.getId());
+
+		pstm.executeUpdate();
+	}
+
+	public void deleteProduct(int id) throws Exception {
+		/*
+		 * String q = "SET FOREIGN_KEY_CHECKS=0"; query.executeQuery(q);
+		 */
+		String sql = "DELETE FROM PRODOTTO WHERE idProdotto=" + id + ";";
+		query.executeUpdate(sql);
+	}
+
+	public void deleteDipendente(int id) throws Exception {
+		String sql = "DELETE FROM AMMINISTRATORE WHERE id=" + id + ";";
+		query.executeUpdate(sql);
+	}
+
+	public String getNomeCliente(int id) throws Exception {
+		String q = "SELECT * FROM CLIENTE WHERE idCliente=" + id + ";";
+		rs = query.executeQuery(q);
+		String nome = "";
+		if (rs.next()) {
+			nome = rs.getString("nome");
+		}
+		return nome;
+	}
+
+	public void elaboraOrdine(int idOrdine) throws Exception {
+		PreparedStatement pstm;
+		String sql = "UPDATE ORDINE SET elaborato=1 WHERE idOrdine=" + idOrdine + ";";
+		pstm = connessione.prepareStatement(sql);
+		pstm.executeUpdate();
+	}
+
+	public ArrayList<Integer> clientiOrdini() throws Exception {
+		String q = "SELECT * FROM ORDINE ORDER BY ELABORATO;";
+		rs = query.executeQuery(q);
+		ArrayList<Integer> clienti = new ArrayList<Integer>();
+		while (rs.next()) {
+			clienti.add(rs.getInt("idCliente"));
+		}
+		return clienti;
+	}
+
 	public void close() throws Exception {
 		query.close();
 		connessione.close();

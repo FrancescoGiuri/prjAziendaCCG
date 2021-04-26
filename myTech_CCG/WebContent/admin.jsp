@@ -80,8 +80,8 @@
 			<nav id="nav-menu-container">
 				<ul class="nav-menu">
 					<li><a href="dipendenti.jsp">Dipendenti</a></li>
-					<li><a href="">Prodotti</a></li>
-					<li><a href="">Ordini</a></li>
+					<li><a href="prodotti.jsp">Prodotti</a></li>
+					<li><a href="ordini.jsp">Nuovi Ordini</a></li>
 					<li><a href="">Clienti</a></li>
 					<li><a href="">Prenotazioni</a></li>
 
@@ -120,7 +120,7 @@
 
 						</div>
 						<h2 class="title">
-							<a href="#">Aggiungi dipendente</a>
+							<a href="aggiungiDipendente.jsp">Aggiungi dipendente</a>
 						</h2>
 						<p style="text-align: center"></p>
 					</div>
@@ -146,7 +146,7 @@
 
 						</div>
 						<h2 class="title">
-							<a href="#">Ordini</a>
+							<a href="ordini.jsp">Ordini in arrivo</a>
 						</h2>
 						<p style="text-align: center"></p>
 					</div>
@@ -160,7 +160,7 @@
 
 						</div>
 						<h2 class="title">
-							<a href="#">Clienti</a>
+							<a href="prodotti.jsp">Prodotti</a>
 						</h2>
 						<p style="text-align: center"></p>
 					</div>
@@ -174,7 +174,7 @@
 
 						</div>
 						<h2 class="title">
-							<a href="#">Modifica prodotti</a>
+							<a href="ordiniV.jsp">Ordini elaborati</a>
 						</h2>
 						<p style="text-align: center"></p>
 					</div>
@@ -186,7 +186,7 @@
 							<img src="" alt="" class="img-fluid">
 						</div>
 						<h2 class="title">
-							<a href="#">Modifica dipendenti</a>
+							<a href="dipendenti.jsp">Dipendenti</a>
 						</h2>
 						<p style="text-align: center"></p>
 					</div>

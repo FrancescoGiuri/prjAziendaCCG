@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-
 /**
  * Servlet implementation class ProdottiServlet
  */
@@ -38,8 +37,36 @@ public class ProdottiServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String comando = request.getParameter("cmd");
+		int id;
+		ArrayList<Prodotto> elenco = new ArrayList<Prodotto>();
+		if (comando.equals("elimina")) {
+			id = Integer.parseInt(request.getParameter("id"));
+			try {
+				DBManager db = new DBManager();
+				db.deleteProduct(id);
+				elenco = db.getProdotti();
+				db.close();
+
+				// ELENCO PRODOTTI IN SESSIONE
+				request.getSession().removeAttribute("ELENCO_PRODOTTI");
+				request.getSession().setAttribute("ELENCO_PRODOTTI", elenco);
+				response.sendRedirect("prodotti.jsp");
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (comando.equals("elabora")) {
+			id = Integer.parseInt(request.getParameter("id"));
+			try {
+				DBManager db = new DBManager();
+				db.elaboraOrdine(id);
+				db.close();
+				response.sendRedirect("ordini.jsp");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -52,22 +79,21 @@ public class ProdottiServlet extends HttpServlet {
 		Prodotto p = new Prodotto();
 		ArrayList<Prodotto> elenco = new ArrayList<Prodotto>();
 		String cmd = request.getParameter("cmd");
+		p.setIdProdotto(Integer.parseInt(request.getParameter("id")));
+		p.setNome(request.getParameter("nome"));
+		p.setDescrizione(request.getParameter("descrizione"));
+		p.setMarca(request.getParameter("marca"));
+		p.setPrezzo(Float.parseFloat(request.getParameter("prezzo")));
+		p.setTipo(Integer.parseInt(request.getParameter("tipo")));
+		p.setDisponibilità(Integer.parseInt(request.getParameter("disponibilita")));
 		if (cmd.equals("add")) {
-			p.setIdProdotto(Integer.parseInt(request.getParameter("idProdotto")));
-			p.setNome(request.getParameter("nome"));
-			p.setDescrizione(request.getParameter("descrizione"));
-			p.setMarca(request.getParameter("marca"));
-			p.setPrezzo(Float.parseFloat(request.getParameter("prezzo")));
-			p.setTipo(Integer.parseInt(request.getParameter("tipo")));
-			p.setDisponibilità(Integer.parseInt(request.getParameter("disponibilita")));
 			if (request.getPart("immagine") != null) {
 				try {
-
 					Part filePart = (Part) request.getPart("immagine");
 					response.setContentType("text/html;charset=UTF-8");
 					InputStream is = filePart.getInputStream();
 					String fileName = filePart.getSubmittedFileName();
-					String path = getServletContext().getRealPath("/img/prodotti"+File.separator+fileName);
+					String path = getServletContext().getRealPath("/img/prodotti" + File.separator + fileName);
 					System.out.println(path);
 					byte[] bytes = new byte[is.available()];
 					is.read(bytes);
@@ -75,7 +101,7 @@ public class ProdottiServlet extends HttpServlet {
 					fops.write(bytes);
 					fops.flush();
 					fops.close();
-					//p.setImmagine(fileName);
+					// p.setImmagine(fileName);
 					p.setImmagine("default.png");
 
 				} catch (Exception e) {
@@ -91,7 +117,22 @@ public class ProdottiServlet extends HttpServlet {
 				// ELENCO PRODOTTI IN SESSIONE
 				request.getSession().removeAttribute("ELENCO_PRODOTTI");
 				request.getSession().setAttribute("ELENCO_PRODOTTI", elenco);
-				response.sendRedirect("admin.jsp");
+				response.sendRedirect("prodotti.jsp");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (cmd.equals("modifica")) {
+
+			try {
+				db = new DBManager();
+				db.updateProduct(p);
+				elenco = db.getProdotti();
+				db.close();
+
+				// ELENCO PRODOTTI IN SESSIONE
+				request.getSession().removeAttribute("ELENCO_PRODOTTI");
+				request.getSession().setAttribute("ELENCO_PRODOTTI", elenco);
+				response.sendRedirect("prodotti.jsp");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

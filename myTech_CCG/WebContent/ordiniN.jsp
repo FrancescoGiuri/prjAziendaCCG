@@ -6,12 +6,24 @@
 
 <%!int tipo;
 	String nome;
-	int num;%>
+	int num;
+	DBManager db;
+	ArrayList<Integer> clientiOrdini;
+	ArrayList<String> nomi;
+	int i;%>
 <%
 	try {
 	nome = (String) session.getAttribute("SESSION_USERNAME");
 	if (nome == null)
 		nome = "";
+	db = new DBManager();
+	clientiOrdini = db.clientiOrdini();
+	i = 0;
+	nomi = new ArrayList<String>();
+	i = 0;
+	for (i = 0; i < clientiOrdini.size(); i++)
+		nomi.add(db.getNomeCliente(clientiOrdini.get(i)));
+	i = 0;
 	tipo = (Integer) session.getAttribute("SESSION_USER_TYPE");
 
 } catch (Exception e) {
@@ -24,7 +36,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>myTech-Dipendenti</title>
+<title>myTech-Ordini</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -115,8 +127,8 @@
 		url="jdbc:mysql://localhost:3306/myTech?serverTimezone=UTC"
 		user="root" password="" />
 
-	<sql:query var="Dipendenti" dataSource="${myDS}">
-        SELECT * FROM AMMINISTRATORE WHERE MANAGER=0;
+	<sql:query var="Ordini" dataSource="${myDS}">
+        SELECT * FROM ORDINE WHERE ELABORATO=0;
     </sql:query>
 
 
@@ -135,7 +147,7 @@
 		<ul class="nav-menu">
 			<li><a href="dipendenti.jsp">Dipendenti</a></li>
 			<li><a href="prodotti.jsp">Prodotti</a></li>
-			<li><a href="">Ordini</a></li>
+			<li><a href="ordiniN.jsp">Ordini</a></li>
 			<li><a href="">Clienti</a></li>
 			<li><a href="">Prenotazioni</a></li>
 
@@ -155,66 +167,65 @@
 	<!--==========================
       Services Section
     ============================-->
-	<section id="services"> <!--  <div class="container">-->
+	<section id="services">
 
-	<div class="visTabella">
+	<div class="visTabella" style="max-width: 1000px;">
 		<center>
 
 			<header class="section-header wow fadeInUp">
-			<h3>Gestione Dipendenti</h3>
+			<h3>Ordini in arrivo</h3>
 			</header>
 			<br> <br> <br>
 
+			<table id="example" class="display" style="width: 100%" border="1"
+				cellpadding="5" style="text-align=center;">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Data</th>
+						<th>Elaborato</th>
+						<th>Cliente</th>
+						<th>Ordine completato</th>
+					</tr>
+				</thead>
+				<tbody>
 
-			<form action="dipendenti?cmd=modifica" method="POST">
-				<table id="example" class="display" style="width: 100%" border="1"
-					cellpadding="5">
-					<thead>
+					<c:forEach var="ordine" items="${Ordini.rows}">
+
 						<tr>
-							<th>Modifica record</th>
-							<th>ID</th>
-							<th>Cognome</th>
-							<th>Nome</th>
-							<th>Email</th>
-							<th>Ruolo</th>
-							<th>Stipendio</th>
-							<th>Elimina record</th>
+							<td><c:out value="${ordine.idOrdine}" /></td>
+							<td align=center><textarea name="data" cols="10" rows="1"
+									disabled style="resize: none;"><c:out
+										value="${ordine.data}" /></textarea></td>
+							<td align=center><c:choose>
+									<c:when test="${ordine.elaborato==0}">
+										No
+									</c:when>
+									<c:otherwise>
+										Si
+									</c:otherwise>
+								</c:choose></td>
+							<td align=center><textarea name="email" cols="25" rows="1"
+									disabled><c:out value="${ordine.idCliente}" /> - (<%=nomi.get(i)%>)
+									<%
+								i++;
+							%>
+								</textarea></td>
+							<td align=center><a
+								href="prodotti?cmd=elabora&id=${ordine.idOrdine}"><input
+									type="button" value="Completa" class="btn"
+									<c:choose>
+									<c:when test="${ordine.elaborato==1}">
+										disabled
+									</c:when>
+								</c:choose>></a></td>
 						</tr>
-					</thead>
-					<tbody>
-
-						<c:forEach var="dipendente" items="${Dipendenti.rows}">
-
-							<tr>
-								<td><input type="button" value="Modifica" class="btn"
-									style="float: left" onclick="submit()"></td>
-								<td><input type="hidden" name="id"
-									value="<c:out value="${dipendente.id}"/>"> <c:out
-										value="${dipendente.id}" /></td>
-								<td><textarea name="cognome" cols="20" rows="1"><c:out
-											value="${dipendente.cognome}" /></textarea></td>
-								<td><textarea name="nome" cols="20" rows="1"><c:out
-											value="${dipendente.nome}" /></textarea></td>
-								<td><textarea name="email" cols="20" rows="1"><c:out
-											value="${dipendente.email}" /></textarea></td>
-								<td><textarea name="ruolo" cols="20" rows="1"><c:out
-											value="${dipendente.ruolo}" /></textarea></td>
-								<td>€ <input type="number" name="stipendio"
-									style="width: 100px;"
-									value="<c:out
-											value="" /><c:out value="${prodotto.marca}" />"></td>
-								<td><a
-									href="prodotti?cmd=elimina&id=${prodotto.idProdotto}"><input
-										type="button" value="Elimina" class="btn2"
-										style="float: right"></a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</form>
+					</c:forEach>
+				</tbody>
+			</table>
 		</center>
 	</div>
-	<!-- </div> --> </section>
+	</section>
 </body>
 </html>
 

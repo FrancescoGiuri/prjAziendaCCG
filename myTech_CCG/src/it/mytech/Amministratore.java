@@ -89,5 +89,7 @@ public class Amministratore {
 	public void setStipendio(float stipendio) {
 		this.stipendio = stipendio;
 	}
+	
+	
 
 }

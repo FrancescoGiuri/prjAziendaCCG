@@ -6,7 +6,10 @@
 	<artifactId>net.codejava</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-
+	<properties>
+		<servlet.version>3.1.0</servlet.version>
+		<jstl.version>1.2</jstl.version>
+	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.github.dhorions/boxable -->
 		<dependency>
@@ -102,6 +105,19 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
