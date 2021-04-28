@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Servlet implementation class RegistrationServlet
  */
@@ -41,8 +44,7 @@ public class RegistrationServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String indirizzo = request.getParameter("indirizzo");
 		String password = request.getParameter("pass");
-		// System.out.println(nome+" "+cognome+" "+email+" "+username+" "+password+"
-		// "+confirm_password);
+		Logger logger = LogManager.getLogger(RegistrationServlet.class);
 		try {
 			ConfigMailManager cmm = new ConfigMailManager();
 			DBManager db = new DBManager();
@@ -56,8 +58,10 @@ public class RegistrationServlet extends HttpServlet {
 			} else
 				response.sendRedirect("registrazione.jsp");
 			db.close();
+			logger.debug("Login effettuato");
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("Errore nella registrazione");
 		}
 	}
 

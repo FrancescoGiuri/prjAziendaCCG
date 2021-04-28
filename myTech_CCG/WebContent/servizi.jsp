@@ -115,7 +115,7 @@ try {
 								if (tipo == 3) {
 							%>
 							<li><a href="carrello.jsp"><fmt:message key="carrello"
-										bundle="${resourceBundle}" />Carrello</a></li>
+										bundle="${resourceBundle}" /></a></li>
 							<%
 								}
 							%>
@@ -149,8 +149,10 @@ try {
 				</p>
 				&nbsp&nbsp&nbsp&nbsp <i class="fa fa-arrow-right" aria-hidden="true"></i>
 				<div style="float: right">
-					<a href="carrello.jsp"><input class="cart" type="button"
-						name="" value="Carrello"></a>
+					<a href="carrello.jsp?locale=<%=locale%>"><input class="cart" type="button"
+						name=""
+						value="<fmt:message key="carrello"
+										bundle="${resourceBundle}" />"></a>
 				</div>
 
 				<div class="select">
@@ -184,7 +186,7 @@ try {
 							</div>
 						</div>
 						<h2 class="title">
-							<a href="servizi?cmd=viewproduct&id=<%=p.getIdProdotto()%>"><%=p.getNome()%></a>
+							<a href="servizi?cmd=viewproduct&id=<%=p.getIdProdotto()%>&locale=<%=locale%>"><%=p.getNome()%></a>
 						</h2>
 						<p style="text-align: center"><%=p.getDescrizione()%></p>
 					</div>

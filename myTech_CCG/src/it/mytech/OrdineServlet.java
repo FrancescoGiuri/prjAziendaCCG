@@ -8,6 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -44,6 +48,7 @@ public class OrdineServlet extends HttpServlet {
 		ArrayList<Prodotto> elenco = (ArrayList<Prodotto>) request.getSession()
 				.getAttribute("SESSION_PRODOTTI_CARRELLO");
 		ArrayList<Integer> q = (ArrayList<Integer>) request.getSession().getAttribute("SESSION_QUANTITA_CARRELLO");
+		Logger logger = LogManager.getLogger(OrdineServlet.class);
 		try {
 			ConfigMailManager cmm = new ConfigMailManager();
 			DBManager db = new DBManager();
@@ -56,11 +61,13 @@ public class OrdineServlet extends HttpServlet {
 			response.addHeader("Content-Type", "application/force-download");
 			response.addHeader("Content-Disposition", "attachment; filename=\"RecapOrdine.pdf\"");
 			response.getOutputStream().write(output.toByteArray());
-			response.sendRedirect("servizi?cmd=viewall");
 			request.getSession().removeAttribute("SESSION_PRODOTTI_CARRELLO");
 			request.getSession().removeAttribute("SESSION_QUANTITA_CARRELLO");
+			response.sendRedirect("servizi?cmd=viewall&locale=" + request.getParameter("locale"));
+			logger.debug("Ordine effettuato");
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("Errore nell'ordine");
 		}
 	}
 

@@ -42,7 +42,7 @@ public class ServiziServlet extends HttpServlet {
 					db.close();
 
 					request.getSession().setAttribute("ELENCO_PRODOTTI", elenco);
-					response.sendRedirect("servizi.jsp");
+					response.sendRedirect("servizi.jsp?locale=" + request.getParameter("locale"));
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +56,7 @@ public class ServiziServlet extends HttpServlet {
 
 					request.getSession().removeAttribute("SESSION_PRODOTTO");
 					request.getSession().setAttribute("SESSION_PRODOTTO", p);
-					response.sendRedirect("prodotto.jsp");
+					response.sendRedirect("prodotto.jsp?locale="+request.getParameter("locale"));
 
 				} catch (Exception e) {
 					e.printStackTrace();

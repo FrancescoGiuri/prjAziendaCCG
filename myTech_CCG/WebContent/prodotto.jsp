@@ -67,7 +67,7 @@ try {
 		<div class="right-column">
 			<form
 				action="<%if (!nome.equals("")) {%>
-					carrelloservlet?cmd=addprodotto&id=<%=p.getIdProdotto()%><%} else {%>login.jsp?from=${pageContext.request.requestURI}<%}%>"
+					carrelloservlet?cmd=addprodotto&id=<%=p.getIdProdotto()%><%} else {%>login.jsp?from=${pageContext.request.requestURI}&locale=<%=locale%><%}%>"
 				method="POST">
 
 				<!-- Product Description -->
@@ -95,7 +95,7 @@ try {
 					<div class="product-price">
 						<span>€<%=p.getPrezzo()%></span> <input onclick="submit()"
 							type="button" name="" class="btn-add"
-							value="Aggiungi al carrello">
+							value="<fmt:message key="aggiungicarrello" bundle="${resourceBundle}" />">
 					</div>
 
 					<br> <br> <br> <br> <br> <br> <br>

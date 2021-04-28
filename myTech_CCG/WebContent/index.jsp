@@ -105,7 +105,8 @@ try {
 					<%
 						if (nome.equals("")) {
 					%>
-					<li><a href="login.jsp?from=${pageContext.request.requestURI}">Login</a></li>
+					<li><a
+						href="login.jsp?from=${pageContext.request.requestURI}&locale=<%=locale%>">Login</a></li>
 					<%
 						} else {
 					%>
@@ -426,7 +427,7 @@ try {
 				<h3>
 					<fmt:message key="shop" bundle="${resourceBundle}" />
 				</h3>
-				<a class="cta-btn" href="servizi?cmd=viewall"><fmt:message
+				<a class="cta-btn" href="servizi?cmd=viewall&locale=<%=locale%>"><fmt:message
 						key="shop2" bundle="${resourceBundle}" /></a>
 			</div>
 		</section>

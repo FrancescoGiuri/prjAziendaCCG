@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -47,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			t = "cliente";
 		}
+		Logger logger = LogManager.getLogger(LoginServlet.class);
 		try {
 			DBManager db = new DBManager();
 			if (db.verificaCredenziali(email, password, t)) {
@@ -64,18 +68,21 @@ public class LoginServlet extends HttpServlet {
 					request.getSession().setAttribute("SESSION_USER_TYPE", 3);
 				}
 
+				logger.debug("Login effettuato");
+
 				if (tipo == 3)
-					response.sendRedirect(request.getParameter("from"));
+					response.sendRedirect(request.getParameter("from") + "?locale=" + request.getParameter("locale"));
 				else
 					response.sendRedirect("admin.jsp");
 			} else {
 				request.getSession().setAttribute("SESSION_USERNAME", "");
-				response.sendRedirect("login.jsp");
+				response.sendRedirect("login.jsp?locale=" + request.getParameter("locale"));
 			}
 
 			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("Errore nel login");
 		}
 	}
 

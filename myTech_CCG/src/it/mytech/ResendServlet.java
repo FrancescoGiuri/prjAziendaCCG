@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Servlet implementation class ResendServlet
  */
@@ -29,7 +32,7 @@ public class ResendServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String email = request.getParameter("email");
-		// System.out.println(email);
+		Logger logger = LogManager.getLogger(ResendServlet.class);
 		try {
 			ConfigMailManager cmm = new ConfigMailManager();
 			if (cmm.sendCredenziali(email)) {
@@ -37,8 +40,10 @@ public class ResendServlet extends HttpServlet {
 			} else
 				response.sendRedirect("registrazione.jsp");
 			cmm.close();
+			logger.debug("Mail con password inviata");
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("Errore nel resend password");
 		}
 
 	}

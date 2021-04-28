@@ -31,9 +31,9 @@ application.setAttribute("LOCALE_KEY", locale);
 		<div class="container">
 			<h1>
 				<fmt:message key="carrello" bundle="${resourceBundle}" />
-				<a href="servizi?cmd=viewall"><input class="cart" type="button"
+				<a href="servizi?cmd=viewall&locale=<%=locale%>"><input class="cart" type="button"
 					name=""
-					value="<fmt:message key="carrello" bundle="${resourceBundle}" />"
+					value="<fmt:message key="back" bundle="${resourceBundle}" />"
 					style="float: right"></a>
 			</h1>
 		</div>
@@ -117,7 +117,7 @@ application.setAttribute("LOCALE_KEY", locale);
 					<fmt:message key="totale" bundle="${resourceBundle}" />
 					: €<span><%=totale + 22 / 100 * totale%></span>
 				</h1>
-				<form action="ordine" method="POST">
+				<form action="ordine?locale=<%=locale %>" method="POST">
 					<button type="submit" class="btn">
 						<fmt:message key="ordina" bundle="${resourceBundle}" />
 					</button>

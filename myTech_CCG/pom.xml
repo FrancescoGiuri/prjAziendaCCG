@@ -11,7 +11,7 @@
 		<jstl.version>1.2</jstl.version>
 	</properties>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/com.github.dhorions/boxable x-->
+		<!-- https://mvnrepository.com/artifact/com.github.dhorions/boxable x -->
 		<dependency>
 			<groupId>com.github.dhorions</groupId>
 			<artifactId>boxable</artifactId>
@@ -118,6 +118,17 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${servlet.version}</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.11.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.11.2</version>
 		</dependency>
 
 	</dependencies>

@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Servlet implementation class LogoutServlet
  */
@@ -28,6 +31,8 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Logger logger = LogManager.getLogger(LoginServlet.class);
+		logger.debug("Logout effettuato");
 		request.getSession().removeAttribute("SESSION_USERNAME");
 		request.getSession().removeAttribute("SESSION_TYPE");
 		request.getSession().invalidate();

@@ -1,5 +1,6 @@
 package it.mytech;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.servlet.ServletConfig;
@@ -8,6 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
 
 /**
  * Servlet implementation class InitServlet
@@ -36,6 +40,9 @@ public class InitServlet extends HttpServlet {
 			config.getServletContext().setAttribute("SESSION_NUM_DIPENDENTI", numDipendenti);
 			config.getServletContext().setAttribute("SESSION_NUM_CLIENTI", numClienti);
 			config.getServletContext().setAttribute("SESSION_NUM_ORDINI", numOrdini);
+			String log4jConfigFile = config.getServletContext().getRealPath("/conf/log4j.xml");
+			ConfigurationSource source = new ConfigurationSource(new FileInputStream(log4jConfigFile));
+			Configurator.initialize(null, source);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
