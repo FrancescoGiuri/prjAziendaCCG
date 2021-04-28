@@ -4,8 +4,8 @@
 <%!int tipo;
 	String nome;%>
 <%
-//commento1
-	try {
+	//commento1
+try {
 	nome = (String) session.getAttribute("SESSION_USERNAME");
 	if (nome == null)
 		nome = "";
@@ -80,11 +80,30 @@
 
 			<nav id="nav-menu-container">
 				<ul class="nav-menu">
+					<%
+						if (tipo == 1) {
+					%>
 					<li><a href="dipendenti.jsp">Dipendenti</a></li>
 					<li><a href="prodotti.jsp">Prodotti</a></li>
+					<%
+						}
+					%>
 					<li><a href="ordini.jsp">Nuovi Ordini</a></li>
-					<li><a href="">Clienti</a></li>
-					<li><a href="">Prenotazioni</a></li>
+					<%
+						if (tipo == 2) {
+					%>
+					<li><a href="ordini.jsp">Ordini Vecchi</a></li>
+					<%
+						}
+					%>
+					<%
+						if (tipo == 1) {
+					%>
+					<li><a href="clienti.jsp">Clienti</a></li>
+					<%
+						}
+					%>
+					<li><a href="prenotazioni.jsp">Prenotazioni</a></li>
 
 					<li class="menu-has-children"><a href=""><%=nome%></a>
 						<ul>
@@ -114,11 +133,13 @@
 			<br> <br> <br>
 			<div class="row services-cols">
 
+				<%
+					if (tipo == 1) {
+				%>
 				<div class="col-md-4 wow fadeInUp">
 					<div class="services-col">
 						<div class="img">
 							<img src="" alt="" class="img-fluid">
-
 						</div>
 						<h2 class="title">
 							<a href="aggiungiDipendente.jsp">Aggiungi dipendente</a>
@@ -147,35 +168,7 @@
 
 						</div>
 						<h2 class="title">
-							<a href="ordini.jsp">Ordini in arrivo</a>
-						</h2>
-						<p style="text-align: center"></p>
-					</div>
-				</div>
-
-
-				<div class="col-md-4 wow fadeInUp">
-					<div class="services-col">
-						<div class="img">
-							<img src="" alt="" class="img-fluid">
-
-						</div>
-						<h2 class="title">
 							<a href="prodotti.jsp">Prodotti</a>
-						</h2>
-						<p style="text-align: center"></p>
-					</div>
-				</div>
-
-
-				<div class="col-md-4 wow fadeInUp">
-					<div class="services-col">
-						<div class="img">
-							<img src="" alt="" class="img-fluid">
-
-						</div>
-						<h2 class="title">
-							<a href="ordiniV.jsp">Ordini elaborati</a>
 						</h2>
 						<p style="text-align: center"></p>
 					</div>
@@ -193,87 +186,63 @@
 					</div>
 				</div>
 
+				<%
+					}
+				%>
+
+				<div class="col-md-4 wow fadeInUp">
+					<div class="services-col">
+						<div class="img">
+							<img src="" alt="" class="img-fluid">
+
+						</div>
+						<h2 class="title">
+							<a href="ordini.jsp">Ordini in arrivo</a>
+						</h2>
+						<p style="text-align: center"></p>
+					</div>
+				</div>
+
+				<div class="col-md-4 wow fadeInUp">
+					<div class="services-col">
+						<div class="img">
+							<img src="" alt="" class="img-fluid">
+
+						</div>
+						<h2 class="title">
+							<a href="ordiniV.jsp">Ordini elaborati</a>
+						</h2>
+						<p style="text-align: center"></p>
+					</div>
+				</div>
+
+				<%
+					if (tipo == 2) {
+				%>
+				<div class="col-md-4 wow fadeInUp">
+					<div class="services-col">
+						<div class="img">
+							<img src="" alt="" class="img-fluid">
+
+						</div>
+						<h2 class="title">
+							<a href="ordiniV.jsp">Prenotazioni</a>
+						</h2>
+						<p style="text-align: center"></p>
+					</div>
+				</div>
+
+				<%
+					}
+				%>
+
+
 
 			</div>
 		</div>
 
 
 	</section>
-	<!-- #services -->
-
-	<!--==========================
-    Footer
-  ============================
-	<footer id="footer">
-		<div class="footer-top">
-			<div class="container">
-				<div class="row">
-
-					<div class="col-lg-3 col-md-6 footer-info">
-						<h3>myTech</h3>
-						<img src="img/logo.png" width="50%" class="img-fluid">
-					</div>
-
-					<div class="col-lg-3 col-md-6 footer-links">
-						<h4>Link utili</h4>
-						<ul>
-							<li><i class="ion-ios-arrow-right"></i> <a
-								href="index.jsp#intro">Home</a></li>
-							<li><i class="ion-ios-arrow-right"></i> <a
-								href="index.jsp#about">About us</a></li>
-							<li><i class="ion-ios-arrow-right"></i> <a
-								href="index.jsp#services">Servizi</a></li>
-							<li><i class="ion-ios-arrow-right"></i> <a href="#">Privacy
-									policy</a></li>
-						</ul>
-					</div>
-
-					<div class="col-lg-3 col-md-6 footer-contact">
-						<h4>Contatti</h4>
-						<p>
-							via Roma <br> Torino (TO)<br> <strong>Telefono:</strong>
-							+39 392 421 7260<br> <strong>Email:</strong>
-							mytech.ccg@gmail.com<br>
-						</p>
-
-						<div class="social-links">
-							<a href="https://www.facebook.com/Francesco.Giuri.00"
-								class="facebook"><i class="fa fa-facebook"></i></a> <a
-								href="https://www.instagram.com/francescogiuri_/"
-								class="instagram"><i class="fa fa-instagram"></i></a>
-						</div>
-
-					</div>
--->
-	<!--
-          <div class="col-lg-3 col-md-6 footer-newsletter">
-            <h4>Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna veniam enim veniam illum dolore legam minim quorum culpa amet magna export quem marada parida nodela caramase seza.</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit"  value="Subscribe">
-            </form>
-          </div>
-        -->
-	<!--
-				</div>
-			</div>
-		</div>
-
-		<div class="container">
-			<div class="copyright">
-				&copy; Copyright <strong>myTech</strong>. All Rights Reserved
-			</div>
-			<div class="credits">
-				
-          All the links in the footer should remain intact.
-          You can delete the links only if you purchased the pro version.
-          Licensing information: https://bootstrapmade.com/license/
-          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=BizPage
-        
-			</div>
-		</div>
-	</footer>
-	<!-- #footer -->
 
 	<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 	<!-- Uncomment below i you want to use a preloader -->

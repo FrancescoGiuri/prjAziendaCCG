@@ -78,7 +78,6 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().setAttribute("SESSION_USERNAME", "");
 				response.sendRedirect("login.jsp?locale=" + request.getParameter("locale"));
 			}
-
 			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();
