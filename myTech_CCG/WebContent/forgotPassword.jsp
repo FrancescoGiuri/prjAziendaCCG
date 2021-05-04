@@ -9,7 +9,7 @@ application.setAttribute("LOCALE_KEY", locale);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>myTech-Login</title>
+<title>myTech-Recupera credenziali</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -44,7 +44,8 @@ application.setAttribute("LOCALE_KEY", locale);
 					<img src="img/logo.png" alt="IMG">
 				</div>
 
-				<form class="login100-form validate-form" action="resend"
+				<form class="login100-form validate-form"
+					action="resend?from=${pageContext.request.requestURI}&locale=<%=locale%>"
 					method="GET">
 					<br> <br> <br> <br> <span
 						class="login100-form-title"><fmt:message key="recupera"
@@ -66,10 +67,12 @@ application.setAttribute("LOCALE_KEY", locale);
 					</div>
 
 					<div class="text-center p-t-12">
-						<a class="txt2" href="index.jsp"> Home</a> &nbsp&nbsp/&nbsp&nbsp<a
-							class="txt2" href="login.jsp"> <fmt:message key="accedi2"
-								bundle="${resourceBundle}" />
-						</a> &nbsp&nbsp/&nbsp&nbsp <a class="txt2" href="registrazione.jsp"><fmt:message
+						<a class="txt2" href="index.jsp?locale=<%=locale%>"> Home</a>
+						&nbsp&nbsp/&nbsp&nbsp<a class="txt2"
+							href="login.jsp?locale=<%=locale%>"> <fmt:message
+								key="accedi2" bundle="${resourceBundle}" />
+						</a> &nbsp&nbsp/&nbsp&nbsp <a class="txt2"
+							href="registrazione.jsp?locale=<%=locale%>"><fmt:message
 								key="crea" bundle="${resourceBundle}" /><i
 							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i> </a>
 					</div>

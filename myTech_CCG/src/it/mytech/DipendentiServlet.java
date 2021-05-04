@@ -29,14 +29,24 @@ public class DipendentiServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String comando = request.getParameter("cmd");
-		int id;
+
 		if (comando.equals("elimina")) {
-			id = Integer.parseInt(request.getParameter("id"));
+			int id = Integer.parseInt(request.getParameter("id"));
 			try {
 				DBManager db = new DBManager();
 				db.deleteDipendente(id);
 				db.close();
 				response.sendRedirect("dipendenti.jsp");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			int id = Integer.parseInt(request.getParameter("id"));
+			try {
+				DBManager db = new DBManager();
+				Amministratore a = db.getAmministratore2(id);
+				request.getSession().setAttribute("MODIFICA_DIPENDENTE", a);
+				response.sendRedirect("modificaDipendente.jsp");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -49,18 +59,18 @@ public class DipendentiServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		DBManager db;
-		Amministratore a = new Amministratore();
 		String cmd = request.getParameter("cmd");
-		a.setId(Integer.parseInt(request.getParameter("id")));
-		a.setCognome(request.getParameter("cognome"));
-		a.setNome(request.getParameter("nome"));
-		a.setEmail(request.getParameter("email"));
-		a.setPassword(request.getParameter("password"));
-		a.setRuolo(request.getParameter("ruolo"));
-		a.setStipendio(Float.parseFloat(request.getParameter("stipendio")));
-		a.setManager(false);
 		if (cmd.equals("add")) {
+			DBManager db;
+			Amministratore a = new Amministratore();
+			a.setId(Integer.parseInt(request.getParameter("id")));
+			a.setCognome(request.getParameter("cognome"));
+			a.setNome(request.getParameter("nome"));
+			a.setEmail(request.getParameter("email"));
+			a.setPassword(request.getParameter("password"));
+			a.setRuolo(request.getParameter("ruolo"));
+			a.setStipendio(Float.parseFloat(request.getParameter("stipendio")));
+			a.setManager(false);
 			try {
 				db = new DBManager();
 				db.addDipendente(a);
@@ -69,8 +79,18 @@ public class DipendentiServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (cmd.equals("modifica")) {
+		} else {
+			Amministratore a = new Amministratore();
+			a.setId(Integer.parseInt(request.getParameter("id")));
+			a.setCognome(request.getParameter("cognome"));
+			a.setNome(request.getParameter("nome"));
+			a.setEmail(request.getParameter("email"));
+			a.setPassword(request.getParameter("password"));
+			a.setRuolo(request.getParameter("ruolo"));
+			a.setStipendio(Float.parseFloat(request.getParameter("stipendio")));
+			a.setManager(false);
 			try {
+				DBManager db = new DBManager();
 				db = new DBManager();
 				db.updateDipendente(a);
 				db.close();
@@ -78,8 +98,8 @@ public class DipendentiServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
 		}
 
 	}
-
 }

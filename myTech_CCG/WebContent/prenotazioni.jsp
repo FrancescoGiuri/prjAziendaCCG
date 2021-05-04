@@ -8,7 +8,7 @@
 	String nome;
 	int num;
 	DBManager db;
-	ArrayList<Integer> clientiOrdini;
+	ArrayList<Integer> clientiPrenotazioni;
 	ArrayList<String> nomi;
 	int i;%>
 <%
@@ -17,12 +17,12 @@
 	if (nome == null)
 		nome = "";
 	db = new DBManager();
-	clientiOrdini = db.clientiOrdini();
+	clientiPrenotazioni = db.clientiPrenotazioni();
 	i = 0;
 	nomi = new ArrayList<String>();
 	i = 0;
-	for (i = 0; i < clientiOrdini.size(); i++)
-		nomi.add(db.getNomeCliente(clientiOrdini.get(i)));
+	for (i = 0; i < clientiPrenotazioni.size(); i++)
+		nomi.add(db.getNomeCliente(clientiPrenotazioni.get(i)));
 	i = 0;
 	tipo = (Integer) session.getAttribute("SESSION_USER_TYPE");
 
@@ -36,7 +36,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>myTech-Ordini</title>
+<title>myTech-Prenotazioni</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -120,27 +120,35 @@
 	src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
 
 <script type="text/javascript" class="init">
-	$(document)
-			.ready(
-					function() {
-						var table = $('#example').DataTable({
-							columnDefs : [ {
-								orderable : false,
-								targets : [ 1, 2, 3 ]
-							} ]
-						});
+	/*$(document)
+	 .ready(
+	 function() {
+	 var table = $('#example').DataTable({
+	 columnDefs : [ {
+	 orderable : false,
+	 targets : [ 1, 2, 3 ]
+	 } ]
+	 });
 
-						$('button')
-								.click(
-										function() {
-											var data = table.$('input, select')
-													.serialize();
-											alert("The following data would have been submitted to the server: \n\n"
-													+ data.substr(0, 120)
-													+ '...');
-											return false;
-										});
-					});
+	 $('button')
+	 .click(
+	 function() {
+	 var data = table.$('input, select')
+	 .serialize();
+	 alert("The following data would have been submitted to the server: \n\n"
+	 + data.substr(0, 120)
+	 + '...');
+	 return false;
+	 });
+	 });*/
+	$(document).ready(function() {
+		$('#example').DataTable({
+			dom : 'Bfrtip',
+			buttons : [ 'copy', 'excel', 'pdf', 'print' ]
+
+		});
+
+	});
 
 	function logout() {
 		var richiesta = window.confirm("Effettuare il logout?");
@@ -155,8 +163,8 @@
 		url="jdbc:mysql://localhost:3306/myTech?serverTimezone=UTC"
 		user="root" password="" />
 
-	<sql:query var="Ordini" dataSource="${myDS}">
-        SELECT * FROM ORDINE WHERE ELABORATO=0;
+	<sql:query var="Prenotazioni" dataSource="${myDS}">
+        SELECT * FROM PRENOTAZIONE;
     </sql:query>
 
 
@@ -167,8 +175,6 @@
 			<h1>
 				<a href="#intro" class="scrollto">myTech</a>
 			</h1>
-			<!-- Uncomment below if you prefer to use an image logo -->
-			<!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
 		</div>
 
 		<nav id="nav-menu-container">
@@ -221,7 +227,7 @@
 		<center>
 
 			<header class="section-header wow fadeInUp">
-			<h3>Ordini in arrivo</h3>
+			<h3>Prenotazioni</h3>
 			</header>
 			<br> <br> <br>
 
@@ -232,33 +238,28 @@
 					<tr>
 						<th>ID</th>
 						<th>Data</th>
-						<th>Elaborato</th>
+						<th>Ora</th>
+						<th>Motivo</th>
 						<th>Cliente</th>
-						<th>Ordine completato</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 
-					<c:forEach var="ordine" items="${Ordini.rows}">
+					<c:forEach var="prenotazione" items="${Prenotazioni.rows}">
 
 						<tr>
-							<td><c:out value="${ordine.idOrdine}" /></td>
-							<td align=center><c:out value="${ordine.data}" /></td>
-							<td align=center><c:choose>
-									<c:when test="${ordine.elaborato==0}">
-										No
-									</c:when>
-									<c:otherwise>
-										Si
-									</c:otherwise>
-								</c:choose></td>
-							<td align=center><c:out value="${ordine.idCliente}" /> - (<%=nomi.get(i)%>)
-								<%
+							<td><c:out value="${prenotazione.idPrenotazione}" /></td>
+							<td align=center><c:out value="${prenotazione.data}" /></td>
+							<td align=center><c:out value="${prenotazione.ora}" /></td>
+							<td align=center><c:out value="${prenotazione.motivo}" /></td>
+							<td align=center><c:out value="${prenotazione.idCliente}" />
+								- (<%=nomi.get(i)%>) <%
 								i++;
 							%></td>
 							<td align=center><a
-								href="prodotti?cmd=elabora&id=${ordine.idOrdine}"><input
-									type="button" value="Completa" class="btn"></a></td>
+								href="prenotazione?cmd=rifiuta&id=${prenotazione.idPrenotazione}"><input
+									type="button" value="Rifiuta" class="btn2"></a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

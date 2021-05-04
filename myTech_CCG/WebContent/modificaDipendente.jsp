@@ -4,14 +4,14 @@
 
 <%!int tipo;
 	String nome;
-	DBManager db;%>
+	Amministratore a;%>
 <%
 	try {
 	nome = (String) session.getAttribute("SESSION_USERNAME");
 	if (nome == null)
 		nome = "";
 	tipo = (Integer) session.getAttribute("SESSION_USER_TYPE");
-	db = new DBManager();
+	a = (Amministratore) session.getAttribute("MODIFICA_DIPENDENTE");
 } catch (Exception e) {
 	nome = "";
 	tipo = 0;
@@ -21,7 +21,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>myTech-Aggiungi Dipendente</title>
+<title>myTech-Modifica Dipendente</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -108,51 +108,50 @@
 		<div class="table-title">
 			<div class="row">
 				<div class="col-sm-6">
-					<h2>Nuovo Dipendente</h2>
+					<h2>Modifica Dipendente</h2>
 				</div>
 			</div>
 		</div>
-		<form action="dipendenti?cmd=add" method="post">
+		<form action="dipendenti?cmd=modifica" method="post">
 			<table class="table table-striped table-hover">
 				<tr>
 					<td><h3>ID</h3></td>
 					<td><input type="text" name="id" required maxlength="4"
-						size="60" readonly="readonly"
-						value="<%=db.getNewId("AMMINISTRATORE")%>"></td>
+						size="60" readonly="readonly" value="<%=a.getId()%>"></td>
 				</tr>
 				<tr>
 					<td><h3>Cognome</h3></td>
 					<td><input type="text" name="cognome" required maxlength="40"
-						size="60"></td>
+						size="60" value="<%=a.getCognome()%>"></td>
 				</tr>
 				<tr>
 					<td><h3>Nome</h3></td>
 					<td><input type="text" name="nome" required maxlength="40"
-						size="60"></td>
+						size="60" value="<%=a.getNome()%>"></td>
 				</tr>
 				<tr>
 					<td><h3>Email</h3></td>
 					<td><input type="email" name="email" required maxlength="40"
-						size="60"></td>
+						size="60" value="<%=a.getEmail()%>"></td>
 				</tr>
 				<tr>
 					<td><h3>Password</h3></td>
 					<td><input type="text" name="password" required maxlength="40"
-						size="60" minlength="8"></td>
+						size="60" minlength="8" value="<%=a.getPassword()%>"></td>
 				</tr>
 				<tr>
 					<td><h3>Ruolo</h3></td>
-					<td><textarea name="ruolo" rows="2" required cols="61"></textarea></td>
+					<td><textarea name="ruolo" rows="2" required cols="61"><%=a.getRuolo()%></textarea></td>
 				</tr>
 				<tr>
 					<td><h3>Stipendio</h3></td>
 					<td><input type="number" name="stipendio"
-						style="width: 512px;" value="1" min="0"></td>
+						style="width: 512px;" min="0" value="<%=a.getStipendio()%>"></td>
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align: center"><input type="reset"
 						class="cart" value="RESET"> <input type="submit"
-						class="cart" value="AGGIUNGI"></td>
+						class="cart" value="MODIFICA"></td>
 				</tr>
 			</table>
 		</form>

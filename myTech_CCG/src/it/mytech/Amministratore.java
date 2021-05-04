@@ -89,7 +89,12 @@ public class Amministratore {
 	public void setStipendio(float stipendio) {
 		this.stipendio = stipendio;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Amministratore [id=" + id + ", email=" + email + ", password=" + password + ", nome=" + nome
+				+ ", cognome=" + cognome + ", ruolo=" + ruolo + ", stipendio=" + stipendio + ", manager=" + manager
+				+ "]";
+	}
 
 }

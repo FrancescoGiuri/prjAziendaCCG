@@ -63,7 +63,7 @@ public class OrdineServlet extends HttpServlet {
 			response.getOutputStream().write(output.toByteArray());
 			request.getSession().removeAttribute("SESSION_PRODOTTI_CARRELLO");
 			request.getSession().removeAttribute("SESSION_QUANTITA_CARRELLO");
-			response.sendRedirect("servizi?cmd=viewall&locale=" + request.getParameter("locale"));
+			//response.sendRedirect("servizi?cmd=viewall&locale=" + request.getParameter("locale"));
 			logger.debug("Ordine effettuato");
 		} catch (Exception e) {
 			e.printStackTrace();

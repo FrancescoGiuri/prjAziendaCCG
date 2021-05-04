@@ -79,28 +79,63 @@
 	src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript" language="javascript"
 	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" class="init">
-	$(document)
-			.ready(
-					function() {
-						var table = $('#example').DataTable({
-							columnDefs : [ {
-								orderable : false,
-								targets : [ 1, 2, 3 ]
-							} ]
-						});
 
-						$('button')
-								.click(
-										function() {
-											var data = table.$('input, select')
-													.serialize();
-											alert("The following data would have been submitted to the server: \n\n"
-													+ data.substr(0, 120)
-													+ '...');
-											return false;
-										});
-					});
+<!-- File export -->
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
+<script type="text/javascript" language="javascript"
+	src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+<script type="text/javascript" class="init">
+	/*$(document)
+	 .ready(
+	 function() {
+	 var table = $('#example').DataTable({
+	 columnDefs : [ {
+	 orderable : false,
+	 targets : [ 1, 2, 3 ]
+	 } ]
+	 });
+
+	 $('button')
+	 .click(
+	 function() {
+	 var data = table.$('input, select')
+	 .serialize();
+	 alert("The following data would have been submitted to the server: \n\n"
+	 + data.substr(0, 120)
+	 + '...');
+	 return false;
+	 });
+	 });*/
+	$(document).ready(function() {
+		$('#example').DataTable({
+			dom : 'Bfrtip',
+			buttons : [ 'copy', 'excel', 'pdf', 'print' ]
+
+		});
+
+	});
 
 	function logout() {
 		var richiesta = window.confirm("Effettuare il logout?");
@@ -133,11 +168,12 @@
 
 		<nav id="nav-menu-container">
 		<ul class="nav-menu">
+			<li><a href="admin.jsp">Home</a></li>
 			<li><a href="dipendenti.jsp">Dipendenti</a></li>
 			<li><a href="prodotti.jsp">Prodotti</a></li>
-			<li><a href="ordini.jsp">Ordini</a></li>
-			<li><a href="">Clienti</a></li>
-			<li><a href="">Prenotazioni</a></li>
+			<li><a href="ordiniN.jsp">Ordini</a></li>
+			<li><a href="clienti.jsp">Clienti</a></li>
+			<li><a href="prenotazioni.jsp">Prenotazioni</a></li>
 
 			<li class="menu-has-children"><a href=""><%=nome%></a>
 				<ul>
@@ -166,69 +202,45 @@
 			<br> <br> <br>
 
 
-			<form action="prodotti?cmd=modifica" method="POST">
-				<table id="example" class="display" style="width: 100%" border="1"
-					cellpadding="5">
-					<thead>
+
+			<table id="example" class="display" style="width: 100%" border="1"
+				cellpadding="5">
+				<thead>
+					<tr>
+						<th></th>
+						<th>ID</th>
+						<th>Nome</th>
+						<th>Descrizione</th>
+						<th>Tipo</th>
+						<th>Marca</th>
+						<th>Prezzo</th>
+						<th>Disponibilità</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<c:forEach var="prodotto" items="${Prodotti.rows}">
+
 						<tr>
-							<th>Modifica record</th>
-							<th>ID</th>
-							<th>Nome</th>
-							<th>Descrizione</th>
-							<th>Tipo</th>
-							<th>Marca</th>
-							<th>Prezzo</th>
-							<th>Disponibilità</th>
-							<th>Elimina record</th>
+							<td><a href="prodotti?cmd=view&id=${prodotto.idProdotto}"><input
+									type="button" value="Modifica" class="btn" style="float: left"></a></td>
+							<td><c:out value="${prodotto.idProdotto}" /></td>
+							<td><c:out value="${prodotto.nome}" /></td>
+							<td><c:out value="${prodotto.descrizione}" /></td>
+							<td><c:out value="${prodotto.tipo}" /></td>
+							<td><c:out value="${prodotto.marca}" /></td>
+							<td>€ <c:out value="${prodotto.prezzo}" /></td>
+							<td><c:out value="${prodotto.disponibilità}" /></td>
+							<td><a href="prodotti?cmd=elimina&id=${prodotto.idProdotto}"><input
+									type="button" value="Elimina" class="btn2" style="float: right"></a></td>
 						</tr>
-					</thead>
-					<tbody>
 
-						<c:forEach var="prodotto" items="${Prodotti.rows}">
+					</c:forEach>
 
-							<tr>
-								<td><input type="button" value="Modifica" class="btn"
-									style="float: left" onclick="submit()"></td>
-								<td><input type="hidden" name="id"
-									value="<c:out value="${prodotto.idProdotto}"/>"> <c:out
-										value="${prodotto.idProdotto}" /></td>
-								<td><textarea name="nome" cols="20" rows="1"><c:out
-											value="${prodotto.nome}" /></textarea></td>
-								<td><textarea name="descrizione" cols="20" rows="1"><c:out
-											value="${prodotto.descrizione}" /></textarea></td>
-								<td><select class="custom-select" name="tipo"
-									style="width: 150px;">
-										<c:choose>
-											<c:when test="${prodotto.tipo==1}">
-												<option value="1" selected>Hardware</option>
-												<option value="2">Software</option>
-											</c:when>
-											<c:otherwise>
-												<option value="1">Hardware</option>
-												<option value="2" selected>Software</option>
-											</c:otherwise>
-										</c:choose>
-								</select></td>
-								<td><textarea name="marca" cols="20" rows="1"><c:out
-											value="" /><c:out value="${prodotto.marca}" /></textarea></td>
-								<td>€ <input type="number" name="prezzo"
-									value="<c:out
-											value="${prodotto.prezzo}" />"
-									min="0" style="width: 100px;"></td>
-								<td><input type="number" name="disponibilita"
-									value="<c:out value="${prodotto.disponibilità}"/>"
-									style="width: 50px;"></td>
-								<td><a
-									href="prodotti?cmd=elimina&id=${prodotto.idProdotto}"><input
-										type="button" value="Elimina" class="btn2"
-										style="float: right"></a></td>
-							</tr>
+				</tbody>
+			</table>
 
-						</c:forEach>
-
-					</tbody>
-				</table>
-			</form>
 		</center>
 	</div>
 	<!-- </div> --> </section>

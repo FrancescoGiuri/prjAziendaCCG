@@ -118,29 +118,36 @@
 
 <script type="text/javascript" language="javascript"
 	src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
-
 <script type="text/javascript" class="init">
-	$(document)
-			.ready(
-					function() {
-						var table = $('#example').DataTable({
-							columnDefs : [ {
-								orderable : false,
-								targets : [ 1, 2, 3 ]
-							} ]
-						});
+	/*$(document)
+	 .ready(
+	 function() {
+	 var table = $('#example').DataTable({
+	 columnDefs : [ {
+	 orderable : false,
+	 targets : [ 1, 2, 3 ]
+	 } ]
+	 });
 
-						$('button')
-								.click(
-										function() {
-											var data = table.$('input, select')
-													.serialize();
-											alert("The following data would have been submitted to the server: \n\n"
-													+ data.substr(0, 120)
-													+ '...');
-											return false;
-										});
-					});
+	 $('button')
+	 .click(
+	 function() {
+	 var data = table.$('input, select')
+	 .serialize();
+	 alert("The following data would have been submitted to the server: \n\n"
+	 + data.substr(0, 120)
+	 + '...');
+	 return false;
+	 });
+	 });*/
+	$(document).ready(function() {
+		$('#example').DataTable({
+			dom : 'Bfrtip',
+			buttons : [ 'copy', 'excel', 'pdf', 'print' ]
+
+		});
+
+	});
 
 	function logout() {
 		var richiesta = window.confirm("Effettuare il logout?");
@@ -156,7 +163,7 @@
 		user="root" password="" />
 
 	<sql:query var="Ordini" dataSource="${myDS}">
-        SELECT * FROM ORDINE WHERE ELABORATO=0;
+        SELECT * FROM ORDINE WHERE ELABORATO=1;
     </sql:query>
 
 
@@ -221,20 +228,18 @@
 		<center>
 
 			<header class="section-header wow fadeInUp">
-			<h3>Ordini in arrivo</h3>
+			<h3>Ordini completati</h3>
 			</header>
 			<br> <br> <br>
 
 			<table id="example" class="display" style="width: 100%" border="1"
 				cellpadding="5" style="text-align=center;">
-
 				<thead>
 					<tr>
 						<th>ID</th>
 						<th>Data</th>
 						<th>Elaborato</th>
 						<th>Cliente</th>
-						<th>Ordine completato</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -243,7 +248,9 @@
 
 						<tr>
 							<td><c:out value="${ordine.idOrdine}" /></td>
-							<td align=center><c:out value="${ordine.data}" /></td>
+							<td align=center><textarea name="data" cols="10" rows="1"
+									disabled style="resize: none;"><c:out
+										value="${ordine.data}" /></textarea></td>
 							<td align=center><c:choose>
 									<c:when test="${ordine.elaborato==0}">
 										No
@@ -252,13 +259,13 @@
 										Si
 									</c:otherwise>
 								</c:choose></td>
-							<td align=center><c:out value="${ordine.idCliente}" /> - (<%=nomi.get(i)%>)
-								<%
+							<td align=center><textarea name="email" cols="25" rows="1"
+									style="min-height: 30px;" disabled><c:out
+										value="${ordine.idCliente}" /> - (<%=nomi.get(i)%>)
+									<%
 								i++;
-							%></td>
-							<td align=center><a
-								href="prodotti?cmd=elabora&id=${ordine.idOrdine}"><input
-									type="button" value="Completa" class="btn"></a></td>
+							%>
+								</textarea></td>
 						</tr>
 					</c:forEach>
 				</tbody>

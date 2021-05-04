@@ -48,7 +48,7 @@ application.setAttribute("LOCALE_KEY", locale);
 					class="login100-form validate-form">
 					<input type="hidden" name="from" value="${param.from}"> <br>
 					<br> <span class="login100-form-title"><fmt:message
-							key="registrati" bundle="${resourceBundle}" /> </span>
+							key="login" bundle="${resourceBundle}" /> </span>
 
 					<div class="wrap-input100 validate-input"
 						data-validate="Inserisci un'email valida">
@@ -83,11 +83,12 @@ application.setAttribute("LOCALE_KEY", locale);
 					</div>
 
 					<div class="text-center p-t-12">
-						<a class="txt2" href="index.jsp"> Home</a> &nbsp&nbsp/&nbsp&nbsp <span
-							class="txt1"> Forgot </span> <a class="txt2"
-							href="forgotPassword.jsp"> Password? </a> &nbsp&nbsp/&nbsp&nbsp <a
-							class="txt2" href="registrazione.jsp"><fmt:message key="crea"
-								bundle="${resourceBundle}" /> <i
+						<a class="txt2" href="index.jsp?locale=<%=locale%>"> Home</a>
+						&nbsp&nbsp/&nbsp&nbsp <span class="txt1"> Forgot </span> <a
+							class="txt2" href="forgotPassword.jsp?locale=<%=locale%>">
+							Password? </a> &nbsp&nbsp/&nbsp&nbsp <a class="txt2"
+							href="registrazione.jsp?locale=<%=locale%>"><fmt:message
+								key="crea" bundle="${resourceBundle}" /> <i
 							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i> </a>
 					</div>
 				</form>

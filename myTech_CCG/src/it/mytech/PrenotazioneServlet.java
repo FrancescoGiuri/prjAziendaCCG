@@ -28,8 +28,23 @@ public class PrenotazioneServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String comando = request.getParameter("cmd");
+		int id;
+		if (comando.equals("rifiuta")) {
+			id = Integer.parseInt(request.getParameter("id"));
+			try {
+				DBManager db = new DBManager();
+				
+				ConfigMailManager cmm = new ConfigMailManager();
+				Prenotazione p = db.getPrenotazione(id);
+				cmm.sendPrenotazioneRifiutata(db.getEmail(db.getIdClienteDaPrenotazione(id)), p.getData(), p.getOra());
+				db.deletePrenotazione(id);
+				db.close();
+				response.sendRedirect("prenotazioni.jsp");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -39,15 +54,18 @@ public class PrenotazioneServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String data = request.getParameter("data");
-		System.out.println(data);
 		String ora = request.getParameter("ora");
 		String messaggio = request.getParameter("message");
 		try {
 			ConfigMailManager cmm = new ConfigMailManager();
 			DBManager db = new DBManager();
-			db.addPrenotazione(data, ora, messaggio, (Integer) request.getSession().getAttribute("SESSION_IDCLIENTE"));
 			String email = db.getEmail((Integer) request.getSession().getAttribute("SESSION_IDCLIENTE"));
-			cmm.sendPrenotazioneRicevuta(email);
+			if (db.addPrenotazione(data, ora, messaggio,
+					(Integer) request.getSession().getAttribute("SESSION_IDCLIENTE"))) {
+				cmm.sendPrenotazioneRicevuta(email, data, ora);
+			} else {
+				cmm.sendPrenotazioneRifiutata(email, data, ora);
+			}
 			response.sendRedirect("index.jsp");
 			db.close();
 		} catch (Exception e) {

@@ -50,6 +50,16 @@ public class DBManager {
 		return a;
 	}
 
+	public Amministratore getAmministratore2(int id) throws Exception {
+		Amministratore a = new Amministratore();
+		String sqlSelect = "SELECT * FROM AMMINISTRATORE WHERE ID=" + id + ";";
+		rs = query.executeQuery(sqlSelect);
+		if (rs.next())
+			a = new Amministratore(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+					rs.getString(6), rs.getFloat(7), rs.getBoolean(8));
+		return a;
+	}
+
 	public Cliente getCliente(String email) throws Exception {
 		Cliente c = new Cliente();
 		String sqlSelect = "SELECT * FROM CLIENTE WHERE EMAIL='" + email + "';";
@@ -70,7 +80,7 @@ public class DBManager {
 		String q = "SELECT * FROM AMMINISTRATORE,CLIENTE WHERE AMMINISTRATORE.email='" + email + "' OR CLIENTE.email='"
 				+ email + "';";
 		rs = query.executeQuery(q);
-		String s = "";
+		String s = "Email non registrata sul nostro sito";
 		if (rs.next()) {
 			String password = rs.getString("password");
 			s = "La tua password è: " + password;
@@ -229,23 +239,31 @@ public class DBManager {
 	public String getEmail(int idCliente) throws Exception {
 		String q = "SELECT * FROM CLIENTE WHERE idCliente=" + idCliente + ";";
 		rs = query.executeQuery(q);
-		String password = "";
+		String email = "";
 		if (rs.next()) {
-			password = rs.getString("email");
+			email = rs.getString("email");
 		}
-		return password;
+		return email;
 	}
 
-	public void addPrenotazione(String data, String ora, String messaggio, int idCliente) throws Exception {
+	public boolean addPrenotazione(String data, String ora, String messaggio, int idCliente) throws Exception {
+		boolean check = false;
 		PreparedStatement pstm;
-		String sql = "INSERT INTO PRENOTAZIONE VALUES (?,?,?,?,?);";
-		pstm = connessione.prepareStatement(sql);
-		pstm.setInt(1, getNewId("PRENOTAZIONE"));
-		pstm.setString(2, data);
-		pstm.setString(3, ora);
-		pstm.setString(4, messaggio);
-		pstm.setInt(5, idCliente);
-		pstm.executeUpdate();
+		String q = "SELECT * FROM PRENOTAZIONE WHERE DATA='" + data + "' AND ORA='" + ora + "';";
+		System.out.println(q);
+		rs = query.executeQuery(q);
+		if (!rs.next()) {
+			String sql = "INSERT INTO PRENOTAZIONE VALUES (?,?,?,?,?);";
+			pstm = connessione.prepareStatement(sql);
+			pstm.setInt(1, getNewId("PRENOTAZIONE"));
+			pstm.setString(2, data);
+			pstm.setString(3, ora);
+			pstm.setString(4, messaggio);
+			pstm.setInt(5, idCliente);
+			pstm.executeUpdate();
+			check = true;
+		}
+		return check;
 	}
 
 	public void addProdotto(Prodotto p) throws Exception {
@@ -263,7 +281,7 @@ public class DBManager {
 		pstm.executeUpdate();
 	}
 
-	public void updateProduct(Prodotto p) throws Exception {
+	public void updateProdotto(Prodotto p) throws Exception {
 		PreparedStatement pstm;
 		/*
 		 * String q = "SET FOREIGN_KEY_CHECKS=0"; query.executeQuery(q);
@@ -300,7 +318,7 @@ public class DBManager {
 
 	public void updateDipendente(Amministratore a) throws Exception {
 		PreparedStatement pstm;
-		String sql = "UPDATE AMMINISTRATORE SET cognome=?, nome= ?, email= ?, ruolo=?, stipendio=?" + " WHERE id= ?;";
+		String sql = "UPDATE AMMINISTRATORE SET cognome=?, nome= ?, email= ?, ruolo=?, stipendio=? WHERE id= ?;";
 		pstm = connessione.prepareStatement(sql);
 
 		pstm.setString(1, a.getCognome());
@@ -344,13 +362,67 @@ public class DBManager {
 	}
 
 	public ArrayList<Integer> clientiOrdini() throws Exception {
-		String q = "SELECT * FROM ORDINE ORDER BY ELABORATO;";
+		String q = "SELECT * FROM ORDINE;";
 		rs = query.executeQuery(q);
 		ArrayList<Integer> clienti = new ArrayList<Integer>();
 		while (rs.next()) {
 			clienti.add(rs.getInt("idCliente"));
 		}
 		return clienti;
+	}
+
+	public ArrayList<Integer> clientiPrenotazioni() throws Exception {
+		String q = "SELECT * FROM PRENOTAZIONE;";
+		rs = query.executeQuery(q);
+		ArrayList<Integer> clienti = new ArrayList<Integer>();
+		while (rs.next()) {
+			clienti.add(rs.getInt("idCliente"));
+		}
+		return clienti;
+	}
+
+	public void deleteCliente(int id) throws Exception {
+		String q = "SET FOREIGN_KEY_CHECKS=0";
+		query.executeQuery(q);
+		String sql = "DELETE FROM CLIENTE WHERE idCliente=" + id + ";";
+		query.executeUpdate(sql);
+	}
+
+	public void deletePrenotazione(int id) throws Exception {
+		String q = "SET FOREIGN_KEY_CHECKS=0";
+		query.executeQuery(q);
+		String sql = "DELETE FROM PRENOTAZIONE WHERE idPrenotazione=" + id + ";";
+		query.executeUpdate(sql);
+	}
+
+	public int getIdClienteDaPrenotazione(int id) throws Exception {
+		String q = "SELECT * FROM PRENOTAZIONE WHERE idPrenotazione=" + id + ";";
+		rs = query.executeQuery(q);
+		int idCliente = 0;
+		if (rs.next()) {
+			idCliente = rs.getInt("idCliente");
+		}
+		return idCliente;
+	}
+
+	public int getIdClienteDaOrdine(int id) throws Exception {
+		String q = "SELECT * FROM ORDINE WHERE idOrdine=" + id + ";";
+		rs = query.executeQuery(q);
+		int idCliente = 0;
+		if (rs.next()) {
+			idCliente = rs.getInt("idCliente");
+		}
+		return idCliente;
+	}
+
+	public Prenotazione getPrenotazione(int idPrenotazione) throws Exception {
+		String q = "SELECT * FROM PRENOTAZIONE WHERE IDPRENOTAZIONE=" + idPrenotazione + ";";
+		rs = query.executeQuery(q);
+		Prenotazione p = null;
+		if (rs.next()) {
+			p = new Prenotazione(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+		}
+		return p;
 	}
 
 	public void close() throws Exception {

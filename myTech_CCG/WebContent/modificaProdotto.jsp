@@ -4,14 +4,14 @@
 
 <%!int tipo;
 	String nome;
-	DBManager db;%>
+	Prodotto p;%>
 <%
 	try {
 	nome = (String) session.getAttribute("SESSION_USERNAME");
 	if (nome == null)
 		nome = "";
 	tipo = (Integer) session.getAttribute("SESSION_USER_TYPE");
-	db = new DBManager();
+	p = (Prodotto) session.getAttribute("MODIFICA_PRODOTTO");
 } catch (Exception e) {
 	nome = "";
 	tipo = 0;
@@ -21,7 +21,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>myTech-Aggiungi Dipendente</title>
+<title>myTech-Modifica Prodotto</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -108,51 +108,52 @@
 		<div class="table-title">
 			<div class="row">
 				<div class="col-sm-6">
-					<h2>Nuovo Dipendente</h2>
+					<h2>Modifica Prodotto</h2>
 				</div>
 			</div>
 		</div>
-		<form action="dipendenti?cmd=add" method="post">
+		<form action="prodotti?cmd=modifica" method="post">
 			<table class="table table-striped table-hover">
 				<tr>
 					<td><h3>ID</h3></td>
 					<td><input type="text" name="id" required maxlength="4"
-						size="60" readonly="readonly"
-						value="<%=db.getNewId("AMMINISTRATORE")%>"></td>
-				</tr>
-				<tr>
-					<td><h3>Cognome</h3></td>
-					<td><input type="text" name="cognome" required maxlength="40"
-						size="60"></td>
+						size="60" readonly="readonly" value="<%=p.getIdProdotto()%>"></td>
 				</tr>
 				<tr>
 					<td><h3>Nome</h3></td>
 					<td><input type="text" name="nome" required maxlength="40"
-						size="60"></td>
+						size="60" value="<%=p.getNome()%>"></td>
 				</tr>
 				<tr>
-					<td><h3>Email</h3></td>
-					<td><input type="email" name="email" required maxlength="40"
-						size="60"></td>
+					<td><h3>Descrizione</h3></td>
+					<td><textarea name="descrizione" rows="2" required cols="61"
+							data-msg="Scrivi qualcosa" placeholder="Descrizione del prodotto"><%=p.getDescrizione()%></textarea></td>
 				</tr>
 				<tr>
-					<td><h3>Password</h3></td>
-					<td><input type="text" name="password" required maxlength="40"
-						size="60" minlength="8"></td>
+					<td><h3>Tipo</h3></td>
+					<td><select class="custom-select" name="tipo">
+							<option value="1" <%if (p.getTipo() == 1) {%> selected <%}%>>Hardware</option>
+							<option value="2" <%if (p.getTipo() == 2) {%> selected <%}%>>Software</option>
+					</select></td>
 				</tr>
 				<tr>
-					<td><h3>Ruolo</h3></td>
-					<td><textarea name="ruolo" rows="2" required cols="61"></textarea></td>
+					<td><h3>Marca</h3></td>
+					<td><textarea name="marca" rows="2" required cols="61"><%=p.getMarca()%></textarea></td>
 				</tr>
 				<tr>
-					<td><h3>Stipendio</h3></td>
-					<td><input type="number" name="stipendio"
-						style="width: 512px;" value="1" min="0"></td>
+					<td><h3>Prezzo</h3></td>
+					<td><input type="number" name="prezzo" style="width: 512px;"
+						min="0" value="<%=p.getPrezzo()%>"></td>
+				</tr>
+				<tr>
+					<td><h3>Disponibilità</h3></td>
+					<td><input type="number" name="disponibilita"
+						style="width: 512px;" min="0" value="<%=p.getDisponibilità()%>"></td>
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align: center"><input type="reset"
 						class="cart" value="RESET"> <input type="submit"
-						class="cart" value="AGGIUNGI"></td>
+						class="cart" value="MODIFICA"></td>
 				</tr>
 			</table>
 		</form>

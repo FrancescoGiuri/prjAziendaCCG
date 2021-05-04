@@ -82,7 +82,7 @@
 
 			<nav id="nav-menu-container">
 				<ul class="nav-menu">
-					<li><a href="admin.jsp">Amministrazione</a></li>
+					<li><a href="admin.jsp">Home</a></li>
 					<li><a href="dipendenti.jsp">Dipendenti</a></li>
 					<li><a href="prodotti.jsp">Prodotti</a></li>
 					<li><a href="ordini.jsp">Ordini</a></li>
@@ -117,7 +117,7 @@
 			<table class="table table-striped table-hover">
 				<tr>
 					<td><h3>ID</h3></td>
-					<td><input type="text" name="idProdotto" required
+					<td><input type="text" name="id" required
 						maxlength="4" size="60" readonly="readonly"
 						value="<%=db.getNewId("PRODOTTO")%>"></td>
 				</tr>

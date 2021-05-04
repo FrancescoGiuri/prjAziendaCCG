@@ -67,16 +67,17 @@ public class LoginServlet extends HttpServlet {
 					request.getSession().setAttribute("SESSION_IDCLIENTE", c.getIdCliente());
 					request.getSession().setAttribute("SESSION_USER_TYPE", 3);
 				}
-
+				String locale = request.getParameter("locale");
 				logger.debug("Login effettuato");
-
-				if (tipo == 3)
-					response.sendRedirect(request.getParameter("from") + "?locale=" + request.getParameter("locale"));
+				if (tipo == 3 && !request.getParameter("from").equals("login.jsp"))
+					response.sendRedirect(request.getParameter("from") + "?locale=" + locale);
+				else if (tipo == 3)
+					response.sendRedirect("index.jsp?locale=" + locale);
 				else
 					response.sendRedirect("admin.jsp");
 			} else {
 				request.getSession().setAttribute("SESSION_USERNAME", "");
-				response.sendRedirect("login.jsp?locale=" + request.getParameter("locale"));
+				response.sendRedirect("login.jsp");
 			}
 			db.close();
 		} catch (Exception e) {

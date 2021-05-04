@@ -107,8 +107,8 @@ application.setAttribute("LOCALE_KEY", locale);
 						data-validate="Inserisci una password">
 						<input class="input100" type="password" name="passConferma"
 							placeholder="<fmt:message
-							key="ripetipassword" bundle="${resourceBundle}" />"> <span
-							class="focus-input100"></span> <span class="symbol-input100">
+							key="ripetipassword" bundle="${resourceBundle}" />">
+						<span class="focus-input100"></span> <span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
@@ -119,11 +119,12 @@ application.setAttribute("LOCALE_KEY", locale);
 					</div>
 
 					<div class="text-center p-t-12">
-						<a class="txt2" href="index.jsp"> Home</a> &nbsp&nbsp/&nbsp&nbsp<span
-							class="txt1"> Forgot </span> <a class="txt2"
-							href="forgotPassword.jsp"> Password? </a> &nbsp&nbsp/&nbsp&nbsp <a
-							class="txt2" href="login.jsp"><fmt:message key="accedi2"
-								bundle="${resourceBundle}" /><i
+						<a class="txt2" href="index.jsp?locale=<%=locale%>"> Home</a>
+						&nbsp&nbsp/&nbsp&nbsp<span class="txt1"> Forgot </span> <a
+							class="txt2" href="forgotPassword.jsp?locale=<%=locale%>">
+							Password? </a> &nbsp&nbsp/&nbsp&nbsp <a class="txt2"
+							href="login.jsp?locale=<%=locale%>"><fmt:message
+								key="accedi2" bundle="${resourceBundle}" /><i
 							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i> </a>
 					</div>
 				</form>

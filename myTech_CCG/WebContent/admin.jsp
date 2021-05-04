@@ -88,11 +88,11 @@ try {
 					<%
 						}
 					%>
-					<li><a href="ordini.jsp">Nuovi Ordini</a></li>
+					<li><a href="ordiniN.jsp">Nuovi Ordini</a></li>
 					<%
 						if (tipo == 2) {
 					%>
-					<li><a href="ordini.jsp">Ordini Vecchi</a></li>
+					<li><a href="ordiniV.jsp">Ordini Vecchi</a></li>
 					<%
 						}
 					%>
@@ -138,51 +138,61 @@ try {
 				%>
 				<div class="col-md-4 wow fadeInUp">
 					<div class="services-col">
-						<div class="img">
-							<img src="" alt="" class="img-fluid">
-						</div>
-						<h2 class="title">
-							<a href="aggiungiDipendente.jsp">Aggiungi dipendente</a>
-						</h2>
-						<p style="text-align: center"></p>
+						<center>
+							<div class="img">
+								<img src="img/opzioni.jpg" alt="" class="img-fluid" width="50%">
+
+							</div>
+							<h2 class="title">
+								<a href="aggiungiDipendente.jsp">Aggiungi dipendente</a>
+							</h2>
+							<p style="text-align: center"></p>
+						</center>
 					</div>
 				</div>
 
 				<div class="col-md-4 wow fadeInUp">
 					<div class="services-col">
-						<div class="img">
-							<img src="" alt="" class="img-fluid">
+						<center>
+							<div class="img">
+								<img src="img/opzioni.jpg" alt="" class="img-fluid" width="50%">
 
-						</div>
-						<h2 class="title">
-							<a href="aggiungiProdotto.jsp">Aggiungi prodotto</a>
-						</h2>
-						<p style="text-align: center"></p>
+							</div>
+							<h2 class="title">
+								<a href="aggiungiProdotto.jsp">Aggiungi prodotto</a>
+							</h2>
+							<p style="text-align: center"></p>
+						</center>
 					</div>
 				</div>
 
 				<div class="col-md-4 wow fadeInUp">
 					<div class="services-col">
-						<div class="img">
-							<img src="" alt="" class="img-fluid">
+						<center>
+							<div class="img">
+								<img src="img/opzioni.jpg" alt="" class="img-fluid" width="50%">
 
-						</div>
-						<h2 class="title">
-							<a href="prodotti.jsp">Prodotti</a>
-						</h2>
-						<p style="text-align: center"></p>
+							</div>
+							<h2 class="title">
+								<a href="prodotti.jsp">Prodotti</a>
+							</h2>
+							<p style="text-align: center"></p>
+						</center>
 					</div>
 				</div>
 
 				<div class="col-md-4 wow fadeInUp">
 					<div class="services-col">
-						<div class="img">
-							<img src="" alt="" class="img-fluid">
-						</div>
-						<h2 class="title">
-							<a href="dipendenti.jsp">Dipendenti</a>
-						</h2>
-						<p style="text-align: center"></p>
+						<center>
+							<div class="img">
+								<img src="img/opzioni.jpg" alt="" class="img-fluid" width="50%">
+
+							</div>
+							<h2 class="title">
+								<a href="dipendenti.jsp">Dipendenti</a>
+							</h2>
+							<p style="text-align: center"></p>
+						</center>
 					</div>
 				</div>
 
@@ -192,27 +202,31 @@ try {
 
 				<div class="col-md-4 wow fadeInUp">
 					<div class="services-col">
-						<div class="img">
-							<img src="" alt="" class="img-fluid">
+						<center>
+							<div class="img">
+								<img src="img/opzioni.jpg" alt="" class="img-fluid" width="50%">
 
-						</div>
-						<h2 class="title">
-							<a href="ordini.jsp">Ordini in arrivo</a>
-						</h2>
-						<p style="text-align: center"></p>
+							</div>
+							<h2 class="title">
+								<a href="ordiniN.jsp">Ordini in arrivo</a>
+							</h2>
+							<p style="text-align: center"></p>
+						</center>
 					</div>
 				</div>
 
 				<div class="col-md-4 wow fadeInUp">
 					<div class="services-col">
-						<div class="img">
-							<img src="" alt="" class="img-fluid">
+						<center>
+							<div class="img">
+								<img src="img/opzioni.jpg" alt="" class="img-fluid" width="50%">
 
-						</div>
-						<h2 class="title">
-							<a href="ordiniV.jsp">Ordini elaborati</a>
-						</h2>
-						<p style="text-align: center"></p>
+							</div>
+							<h2 class="title">
+								<a href="ordiniV.jsp">Ordini elaborati</a>
+							</h2>
+							<p style="text-align: center"></p>
+						</center>
 					</div>
 				</div>
 
@@ -221,14 +235,16 @@ try {
 				%>
 				<div class="col-md-4 wow fadeInUp">
 					<div class="services-col">
-						<div class="img">
-							<img src="" alt="" class="img-fluid">
+						<center>
+							<div class="img">
+								<img src="img/opzioni.jpg" alt="" class="img-fluid" width="50%">
 
-						</div>
-						<h2 class="title">
-							<a href="ordiniV.jsp">Prenotazioni</a>
-						</h2>
-						<p style="text-align: center"></p>
+							</div>
+							<h2 class="title">
+								<a href="prenotazioni.jsp">Prenotazioni</a>
+							</h2>
+							<p style="text-align: center"></p>
+						</center>
 					</div>
 				</div>
 

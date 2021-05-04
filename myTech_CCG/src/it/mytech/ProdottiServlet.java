@@ -28,7 +28,7 @@ public class ProdottiServlet extends HttpServlet {
 	 */
 	public ProdottiServlet() {
 		super();
-		// TODO Auto-generated constructor stub 
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -61,11 +61,24 @@ public class ProdottiServlet extends HttpServlet {
 			try {
 				DBManager db = new DBManager();
 				db.elaboraOrdine(id);
+				ConfigMailManager cmm = new ConfigMailManager();
+				cmm.sendOrdineCompletato(db.getEmail(db.getIdClienteDaOrdine(id)));
 				db.close();
 				response.sendRedirect("ordini.jsp");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else {
+			id = Integer.parseInt(request.getParameter("id"));
+			try {
+				DBManager db = new DBManager();
+				Prodotto p = db.getProdotto(id);
+				request.getSession().setAttribute("MODIFICA_PRODOTTO", p);
+				response.sendRedirect("modificaProdotto.jsp");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
 
@@ -121,11 +134,11 @@ public class ProdottiServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (cmd.equals("modifica")) {
+		} else {
 
 			try {
 				db = new DBManager();
-				db.updateProduct(p);
+				db.updateProdotto(p);
 				elenco = db.getProdotti();
 				db.close();
 

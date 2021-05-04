@@ -113,7 +113,7 @@ public class ConfigMailManager {
 		}
 	}
 
-	public void sendPrenotazioneRicevuta(String email) {
+	public void sendPrenotazioneRicevuta(String email, String data, String ora) {
 		message = new MimeMessage(session);
 		try {
 			// Impostazione del destinatario
@@ -127,8 +127,82 @@ public class ConfigMailManager {
 			message.setSubject("Richiesta prenotazione");
 
 			// Imposto la password come testo del messaggio
-			message.setText("Gentile cliente,\nla informiamo che abbiamo ricevuto la sua richiesta di prenotazione.\n"
-					+ "Riceverà al più presto una nuova mail che le confermerà o annullerà la prenotazione!\nSe non dovesse riceverla ci contatti!");
+			message.setText("Gentile cliente,\nla informiamo che abbiamo ricevuto la sua richiesta di prenotazione per "
+					+ data + " alle ore " + ora + ".\n"
+					+ "Se dovessero verificarsi degli imprevisti, ci faremo sentire noi!");
+			// Invio la mail
+			transport.sendMessage(message, message.getAllRecipients());
+			System.out.println("Mail Inviata!!!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sendPrenotazioneRifiutata(String email, String data, String ora) {
+		message = new MimeMessage(session);
+		try {
+			// Impostazione del destinatario
+			InternetAddress toAddress = new InternetAddress(email);
+			message.addRecipient(Message.RecipientType.TO, toAddress);
+
+			// Impostazione del mittente
+			message.setFrom(new InternetAddress(prop.getProperty("mail.smtp.user"), "myTech"));
+
+			// Impostazione dell'oggetto del messaggio
+			message.setSubject("Richiesta prenotazione rifiutata");
+
+			// Imposto la password come testo del messaggio
+			message.setText("Gentile cliente,\nla informiamo che abbiamo ricevuto la sua richiesta di prenotazione per "
+					+ data + " alle ore " + ora + ".\n"
+					+ "Tuttavia non siamo disponibili a riceverla in questa data e a quest'ora. Provi ad effettuare una nuova prenotazione cambiando i parametri!\nSe dovesse riscontrare delle difficoltà ci contatti!");
+			// Invio la mail
+			transport.sendMessage(message, message.getAllRecipients());
+			System.out.println("Mail Inviata!!!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sendOrdineCompletato(String email) {
+		message = new MimeMessage(session);
+		try {
+			// Impostazione del destinatario
+			InternetAddress toAddress = new InternetAddress(email);
+			message.addRecipient(Message.RecipientType.TO, toAddress);
+
+			// Impostazione del mittente
+			message.setFrom(new InternetAddress(prop.getProperty("mail.smtp.user"), "myTech"));
+
+			// Impostazione dell'oggetto del messaggio
+			message.setSubject("Ordine completato");
+
+			// Imposto la password come testo del messaggio
+			message.setText("Gentile cliente,\nla informiamo il suo ordine è pronto per essere ritirato!"
+					+ "La ringraziamo per aver scelto di acquistare da noi di myTech!");
+			// Invio la mail
+			transport.sendMessage(message, message.getAllRecipients());
+			System.out.println("Mail Inviata!!!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sendProfiloCancellato(String email) {
+		message = new MimeMessage(session);
+		try {
+			// Impostazione del destinatario
+			InternetAddress toAddress = new InternetAddress(email);
+			message.addRecipient(Message.RecipientType.TO, toAddress);
+
+			// Impostazione del mittente
+			message.setFrom(new InternetAddress(prop.getProperty("mail.smtp.user"), "myTech"));
+
+			// Impostazione dell'oggetto del messaggio
+			message.setSubject("account eliminato");
+
+			// Imposto la password come testo del messaggio
+			message.setText(
+					"Gentile cliente,\nla informiamo che il suo account è stato rimosso dai nostri registri.\nCi contatti per eventuali spiegazioni");
 			// Invio la mail
 			transport.sendMessage(message, message.getAllRecipients());
 			System.out.println("Mail Inviata!!!");

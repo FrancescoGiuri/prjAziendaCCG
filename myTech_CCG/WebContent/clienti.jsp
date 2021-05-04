@@ -6,24 +6,12 @@
 
 <%!int tipo;
 	String nome;
-	int num;
-	DBManager db;
-	ArrayList<Integer> clientiOrdini;
-	ArrayList<String> nomi;
-	int i;%>
+	int num;%>
 <%
 	try {
 	nome = (String) session.getAttribute("SESSION_USERNAME");
 	if (nome == null)
 		nome = "";
-	db = new DBManager();
-	clientiOrdini = db.clientiOrdini();
-	i = 0;
-	nomi = new ArrayList<String>();
-	i = 0;
-	for (i = 0; i < clientiOrdini.size(); i++)
-		nomi.add(db.getNomeCliente(clientiOrdini.get(i)));
-	i = 0;
 	tipo = (Integer) session.getAttribute("SESSION_USER_TYPE");
 
 } catch (Exception e) {
@@ -36,7 +24,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>myTech-Ordini</title>
+<title>myTech-Clienti</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -118,29 +106,36 @@
 
 <script type="text/javascript" language="javascript"
 	src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
-
 <script type="text/javascript" class="init">
-	$(document)
-			.ready(
-					function() {
-						var table = $('#example').DataTable({
-							columnDefs : [ {
-								orderable : false,
-								targets : [ 1, 2, 3 ]
-							} ]
-						});
+	/*$(document)
+	 .ready(
+	 function() {
+	 var table = $('#example').DataTable({
+	 columnDefs : [ {
+	 orderable : false,
+	 targets : [ 1, 2, 3 ]
+	 } ]
+	 });
 
-						$('button')
-								.click(
-										function() {
-											var data = table.$('input, select')
-													.serialize();
-											alert("The following data would have been submitted to the server: \n\n"
-													+ data.substr(0, 120)
-													+ '...');
-											return false;
-										});
-					});
+	 $('button')
+	 .click(
+	 function() {
+	 var data = table.$('input, select')
+	 .serialize();
+	 alert("The following data would have been submitted to the server: \n\n"
+	 + data.substr(0, 120)
+	 + '...');
+	 return false;
+	 });
+	 });*/
+	$(document).ready(function() {
+		$('#example').DataTable({
+			dom : 'Bfrtip',
+			buttons : [ 'copy', 'excel', 'pdf', 'print' ]
+
+		});
+
+	});
 
 	function logout() {
 		var richiesta = window.confirm("Effettuare il logout?");
@@ -155,8 +150,8 @@
 		url="jdbc:mysql://localhost:3306/myTech?serverTimezone=UTC"
 		user="root" password="" />
 
-	<sql:query var="Ordini" dataSource="${myDS}">
-        SELECT * FROM ORDINE WHERE ELABORATO=0;
+	<sql:query var="Clienti" dataSource="${myDS}">
+        SELECT * FROM CLIENTE;
     </sql:query>
 
 
@@ -174,29 +169,10 @@
 		<nav id="nav-menu-container">
 		<ul class="nav-menu">
 			<li><a href="admin.jsp">Home</a></li>
-			<%
-				if (tipo == 1) {
-			%>
 			<li><a href="dipendenti.jsp">Dipendenti</a></li>
 			<li><a href="prodotti.jsp">Prodotti</a></li>
-			<%
-				}
-			%>
-			<li><a href="ordiniN.jsp">Nuovi Ordini</a></li>
-			<%
-				if (tipo == 2) {
-			%>
-			<li><a href="ordiniV.jsp">Ordini Vecchi</a></li>
-			<%
-				}
-			%>
-			<%
-				if (tipo == 1) {
-			%>
+			<li><a href="ordiniN.jsp">Ordini</a></li>
 			<li><a href="clienti.jsp">Clienti</a></li>
-			<%
-				}
-			%>
 			<li><a href="prenotazioni.jsp">Prenotazioni</a></li>
 
 			<li class="menu-has-children"><a href=""><%=nome%></a>
@@ -212,60 +188,52 @@
 
 	<br>
 	<br>
-	<!--==========================
+	<!--========================== 
       Services Section
-    ============================ -->
-	<section id="services">
+    ============================-->
+	<section id="services"> <!--  <div class="container">-->
 
 	<div class="visTabella" style="max-width: 1000px;">
 		<center>
 
 			<header class="section-header wow fadeInUp">
-			<h3>Ordini in arrivo</h3>
+			<h3>Clienti</h3>
 			</header>
 			<br> <br> <br>
 
-			<table id="example" class="display" style="width: 100%" border="1"
-				cellpadding="5" style="text-align=center;">
 
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Data</th>
-						<th>Elaborato</th>
-						<th>Cliente</th>
-						<th>Ordine completato</th>
-					</tr>
-				</thead>
-				<tbody>
-
-					<c:forEach var="ordine" items="${Ordini.rows}">
-
+			<form action="dipendenti?cmd=modifica" method="POST">
+				<table id="example" class="display" style="width: 100%" border="1"
+					cellpadding="5">
+					<thead>
 						<tr>
-							<td><c:out value="${ordine.idOrdine}" /></td>
-							<td align=center><c:out value="${ordine.data}" /></td>
-							<td align=center><c:choose>
-									<c:when test="${ordine.elaborato==0}">
-										No
-									</c:when>
-									<c:otherwise>
-										Si
-									</c:otherwise>
-								</c:choose></td>
-							<td align=center><c:out value="${ordine.idCliente}" /> - (<%=nomi.get(i)%>)
-								<%
-								i++;
-							%></td>
-							<td align=center><a
-								href="prodotti?cmd=elabora&id=${ordine.idOrdine}"><input
-									type="button" value="Completa" class="btn"></a></td>
+							<th>ID</th>
+							<th>Email</th>
+							<th>Nome</th>
+							<th>Indirizzo</th>
+							<th></th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+
+						<c:forEach var="cliente" items="${Clienti.rows}">
+
+							<tr>
+								<td><c:out value="${cliente.idCliente}" /></td>
+								<td><c:out value="${cliente.email}" /></td>
+								<td><c:out value="${cliente.nome}" /></td>
+								<td><c:out value="${cliente.indirizzo}" /></td>
+								<td align=center><a
+									href="clienti?cmd=elimina&id=${cliente.idCliente}"><input
+										type="button" value="Elimina" class="btn2"></a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</form>
 		</center>
 	</div>
-	</section>
+	<!-- </div> --> </section>
 </body>
 </html>
 

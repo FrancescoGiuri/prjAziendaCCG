@@ -54,7 +54,7 @@ public class RegistrationServlet extends HttpServlet {
 				request.getSession().setAttribute("SESSION_USERNAME", c.getNome());
 				request.getSession().setAttribute("SESSION_IDCLIENTE", c.getIdCliente());
 				cmm.sendRegistrazione(email);
-				response.sendRedirect("index.jsp");
+				response.sendRedirect("login.jsp?from=index.jsp");
 			} else
 				response.sendRedirect("registrazione.jsp");
 			db.close();

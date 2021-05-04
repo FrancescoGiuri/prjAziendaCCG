@@ -79,28 +79,63 @@
 	src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript" language="javascript"
 	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" class="init">
-	$(document)
-			.ready(
-					function() {
-						var table = $('#example').DataTable({
-							columnDefs : [ {
-								orderable : false,
-								targets : [ 1, 2, 3 ]
-							} ]
-						});
 
-						$('button')
-								.click(
-										function() {
-											var data = table.$('input, select')
-													.serialize();
-											alert("The following data would have been submitted to the server: \n\n"
-													+ data.substr(0, 120)
-													+ '...');
-											return false;
-										});
-					});
+<!-- File export -->
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
+<script type="text/javascript" language="javascript"
+	src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+
+<script type="text/javascript" language="javascript"
+	src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+<script type="text/javascript" class="init">
+	/*$(document)
+	 .ready(
+	 function() {
+	 var table = $('#example').DataTable({
+	 columnDefs : [ {
+	 orderable : false,
+	 targets : [ 1, 2, 3 ]
+	 } ]
+	 });
+
+	 $('button')
+	 .click(
+	 function() {
+	 var data = table.$('input, select')
+	 .serialize();
+	 alert("The following data would have been submitted to the server: \n\n"
+	 + data.substr(0, 120)
+	 + '...');
+	 return false;
+	 });
+	 });*/
+	$(document).ready(function() {
+		$('#example').DataTable({
+			dom : 'Bfrtip',
+			buttons : [ 'copy', 'excel', 'pdf', 'print' ]
+
+		});
+
+	});
 
 	function logout() {
 		var richiesta = window.confirm("Effettuare il logout?");
@@ -127,17 +162,16 @@
 			<h1>
 				<a href="#intro" class="scrollto">myTech</a>
 			</h1>
-			<!-- Uncomment below if you prefer to use an image logo -->
-			<!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
 		</div>
 
 		<nav id="nav-menu-container">
 		<ul class="nav-menu">
+			<li><a href="admin.jsp">Home</a></li>
 			<li><a href="dipendenti.jsp">Dipendenti</a></li>
 			<li><a href="prodotti.jsp">Prodotti</a></li>
-			<li><a href="">Ordini</a></li>
-			<li><a href="">Clienti</a></li>
-			<li><a href="">Prenotazioni</a></li>
+			<li><a href="ordiniN.jsp">Ordini</a></li>
+			<li><a href="clienti.jsp">Clienti</a></li>
+			<li><a href="prenotazioni.jsp">Prenotazioni</a></li>
 
 			<li class="menu-has-children"><a href=""><%=nome%></a>
 				<ul>
@@ -165,52 +199,47 @@
 			</header>
 			<br> <br> <br>
 
+			<table id="example" class="display" style="width: 100%" border="1"
+				cellpadding="5">
 
-			<form action="dipendenti?cmd=modifica" method="POST">
-				<table id="example" class="display" style="width: 100%" border="1"
-					cellpadding="5">
-					<thead>
+				<thead>
+					<tr>
+						<th></th>
+						<th>ID</th>
+						<th>Cognome</th>
+						<th>Nome</th>
+						<th>Email</th>
+						<th>Ruolo</th>
+						<th>Stipendio</th>
+						<th></th>
+					</tr>
+				</thead>
+
+
+
+
+
+				<tbody>
+					<c:forEach var="dipendente" items="${Dipendenti.rows}">
 						<tr>
-							<th>Modifica record</th>
-							<th>ID</th>
-							<th>Cognome</th>
-							<th>Nome</th>
-							<th>Email</th>
-							<th>Ruolo</th>
-							<th>Stipendio</th>
-							<th>Elimina record</th>
+							<td><a href="dipendenti?cmd=view&id=${dipendente.id}"><input
+									type="button" value="Modifica" class="btn" style="float: left"></a></td>
+							<td><c:out value="${dipendente.id}" /></td>
+							<td><c:out value="${dipendente.cognome}" /></td>
+							<td><c:out value="${dipendente.nome}" /></td>
+							<td><c:out value="${dipendente.email}" /></td>
+							<td><c:out value="${dipendente.ruolo}" /></td>
+							<td>€ <c:out value="${dipendente.stipendio}" /></td>
+							<td><a href="dipendenti?cmd=elimina&id=${dipendente.id}"><input
+									type="button" value="Elimina" class="btn2" style="float: right"></a></td>
+
 						</tr>
-					</thead>
-					<tbody>
+					</c:forEach>
+				</tbody>
 
-						<c:forEach var="dipendente" items="${Dipendenti.rows}">
 
-							<tr>
-								<td><input type="button" value="Modifica" class="btn"
-									style="float: left" onclick="submit()"></td>
-								<td><input type="hidden" name="id"
-									value="<c:out value="${dipendente.id}"/>"> <c:out
-										value="${dipendente.id}" /></td>
-								<td><textarea name="cognome" cols="20" rows="1"><c:out
-											value="${dipendente.cognome}" /></textarea></td>
-								<td><textarea name="nome" cols="20" rows="1"><c:out
-											value="${dipendente.nome}" /></textarea></td>
-								<td><textarea name="email" cols="20" rows="1"><c:out
-											value="${dipendente.email}" /></textarea></td>
-								<td><textarea name="ruolo" cols="20" rows="1"><c:out
-											value="${dipendente.ruolo}" /></textarea></td>
-								<td>€ <input type="number" name="stipendio"
-									style="width: 100px;"
-									value="<c:out
-											value="" /><c:out value="${prodotto.marca}" />"></td>
-								<td><a
-									href="prodotti?cmd=elimina&id=${prodotto.idProdotto}"><input
-										type="button" value="Elimina" class="btn2"
-										style="float: right"></a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+
+			</table>
 			</form>
 		</center>
 	</div>

@@ -102,7 +102,7 @@ application.setAttribute("LOCALE_KEY", locale);
 					Subtotale: €<span><%=totale%></span>
 				</h2>
 				<h3 class="tax">
-					IVA (22%): €<span> <%=totale + 22 / 100 * totale%>
+					IVA (22%): €<span> <%= 22.0 / 100.0 * totale%>
 					</span>
 				</h3>
 				<!-- 
@@ -115,7 +115,7 @@ application.setAttribute("LOCALE_KEY", locale);
 			<div class="right">
 				<h1 class="total">
 					<fmt:message key="totale" bundle="${resourceBundle}" />
-					: €<span><%=totale + 22 / 100 * totale%></span>
+					: €<span><%=totale + 22.0 / 100.0 * totale%></span>
 				</h1>
 				<form action="ordine?locale=<%=locale %>" method="POST">
 					<button type="submit" class="btn">
