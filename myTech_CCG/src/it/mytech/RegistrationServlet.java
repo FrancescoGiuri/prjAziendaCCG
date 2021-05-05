@@ -1,5 +1,6 @@
 package it.mytech;
 
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,7 +54,7 @@ public class RegistrationServlet extends HttpServlet {
 				Cliente c = db.getCliente(email);
 				request.getSession().setAttribute("SESSION_USERNAME", c.getNome());
 				request.getSession().setAttribute("SESSION_IDCLIENTE", c.getIdCliente());
-				cmm.sendRegistrazione(email);
+				cmm.sendRegistrazione(email,getServletContext().getRealPath("/pdf" + File.separator + "PrivacyPolicy.pdf"));
 				response.sendRedirect("login.jsp?from=index.jsp");
 			} else
 				response.sendRedirect("registrazione.jsp");

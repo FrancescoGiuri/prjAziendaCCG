@@ -1,11 +1,19 @@
 package it.mytech;
 
 import java.util.Properties;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class ConfigMailManager {
 
@@ -64,7 +72,7 @@ public class ConfigMailManager {
 		return check;
 	}
 
-	public void sendRegistrazione(String email) {
+	public void sendRegistrazione(String email, String path) {
 		message = new MimeMessage(session);
 		try {
 			// Impostazione del destinatario
@@ -77,8 +85,17 @@ public class ConfigMailManager {
 			// Impostazione dell'oggetto del messaggio
 			message.setSubject("Benvenuto nel mondo myTech!");
 
-			// Imposto la password come testo del messaggio
-			message.setText("Hai fatto la scelta giusta! Scegli la qualità, scegli myTech!");
+			BodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart.setText("Hai fatto la scelta giusta! Scegli la qualità, scegli myTech!");
+			Multipart multipart = new MimeMultipart();
+			multipart.addBodyPart(messageBodyPart);
+			messageBodyPart = new MimeBodyPart();
+			messageBodyPart.setFileName("PrivacyPolicy.pdf");
+			DataSource source = new FileDataSource(path);
+			messageBodyPart.setDataHandler(new DataHandler(source));
+			multipart.addBodyPart(messageBodyPart);
+			message.setContent(multipart);
+
 			// Invio la mail
 			transport.sendMessage(message, message.getAllRecipients());
 			System.out.println("Mail Inviata!!!");

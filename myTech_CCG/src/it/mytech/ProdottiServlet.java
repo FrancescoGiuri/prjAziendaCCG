@@ -64,7 +64,7 @@ public class ProdottiServlet extends HttpServlet {
 				ConfigMailManager cmm = new ConfigMailManager();
 				cmm.sendOrdineCompletato(db.getEmail(db.getIdClienteDaOrdine(id)));
 				db.close();
-				response.sendRedirect("ordini.jsp");
+				response.sendRedirect("ordiniN.jsp");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

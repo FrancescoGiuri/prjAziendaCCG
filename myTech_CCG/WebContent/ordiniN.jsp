@@ -186,7 +186,7 @@
 			<%
 				if (tipo == 2) {
 			%>
-			<li><a href="ordiniV.jsp">Ordini Vecchi</a></li>
+			
 			<%
 				}
 			%>

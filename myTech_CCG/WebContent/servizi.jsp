@@ -111,14 +111,7 @@ try {
 					%>
 					<li class="menu-has-children"><a href=""><%=nome%></a>
 						<ul>
-							<%
-								if (tipo == 3) {
-							%>
-							<li><a href="carrello.jsp"><fmt:message key="carrello"
-										bundle="${resourceBundle}" /></a></li>
-							<%
-								}
-							%>
+
 
 							<li><a href="logout" onclick="return logout()">Logout</a></li>
 						</ul></li>
@@ -149,8 +142,8 @@ try {
 				</p>
 				&nbsp&nbsp&nbsp&nbsp <i class="fa fa-arrow-right" aria-hidden="true"></i>
 				<div style="float: right">
-					<a href="carrello.jsp?locale=<%=locale%>"><input class="cart" type="button"
-						name=""
+					<a href="carrello.jsp?locale=<%=locale%>"><input class="cart"
+						type="button" name=""
 						value="<fmt:message key="carrello"
 										bundle="${resourceBundle}" />"></a>
 				</div>
@@ -186,7 +179,8 @@ try {
 							</div>
 						</div>
 						<h2 class="title">
-							<a href="servizi?cmd=viewproduct&id=<%=p.getIdProdotto()%>&locale=<%=locale%>"><%=p.getNome()%></a>
+							<a
+								href="servizi?cmd=viewproduct&id=<%=p.getIdProdotto()%>&locale=<%=locale%>"><%=p.getNome()%></a>
 						</h2>
 						<p style="text-align: center"><%=p.getDescrizione()%></p>
 					</div>

@@ -84,7 +84,7 @@
 					<li><a href="admin.jsp">Home</a></li>
 					<li><a href="dipendenti.jsp">Dipendenti</a></li>
 					<li><a href="prodotti.jsp">Prodotti</a></li>
-					<li><a href="ordini.jsp">Ordini</a></li>
+					<li><a href="ordiniN.jsp">Nuovi Ordini</a></li>
 					<li><a href="clienti.jsp">Clienti</a></li>
 					<li><a href="prenotazioni.jsp">Prenotazioni</a></li>
 

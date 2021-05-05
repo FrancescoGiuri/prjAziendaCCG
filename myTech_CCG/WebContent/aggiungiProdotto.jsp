@@ -85,7 +85,7 @@
 					<li><a href="admin.jsp">Home</a></li>
 					<li><a href="dipendenti.jsp">Dipendenti</a></li>
 					<li><a href="prodotti.jsp">Prodotti</a></li>
-					<li><a href="ordini.jsp">Ordini</a></li>
+					<li><a href="ordiniN.jsp">Nuovi Ordini</a></li>
 					<li><a href="clienti.jsp">Clienti</a></li>
 					<li><a href="prenotazioni.jsp">Prenotazioni</a></li>
 
@@ -113,13 +113,13 @@
 				</div>
 			</div>
 		</div>
-		<form action="prodotti?cmd=add" method="post" enctype="multipart/form-data">
+		<form action="prodotti?cmd=add" method="post"
+			enctype="multipart/form-data">
 			<table class="table table-striped table-hover">
 				<tr>
 					<td><h3>ID</h3></td>
-					<td><input type="text" name="id" required
-						maxlength="4" size="60" readonly="readonly"
-						value="<%=db.getNewId("PRODOTTO")%>"></td>
+					<td><input type="text" name="id" required maxlength="4"
+						size="60" readonly="readonly" value="<%=db.getNewId("PRODOTTO")%>"></td>
 				</tr>
 				<tr>
 					<td><h3>Nome</h3></td>
@@ -128,9 +128,8 @@
 				</tr>
 				<tr>
 					<td><h3>Descrizione</h3></td>
-					<td><textarea name="descrizione" rows="2" required
-							cols="61" data-msg="Scrivi qualcosa"
-							placeholder="Descrizione del prodotto"></textarea></td>
+					<td><textarea name="descrizione" rows="2" required cols="61"
+							data-msg="Scrivi qualcosa" placeholder="Descrizione del prodotto"></textarea></td>
 				</tr>
 				<tr>
 					<td><h3>Tipo</h3></td>
@@ -141,7 +140,7 @@
 				</tr>
 				<tr>
 					<td><h3>Marca</h3></td>
-					<td><input type="text" name="marca"  size="60" required></td>
+					<td><input type="text" name="marca" size="60" required></td>
 				</tr>
 				<tr>
 					<td><h3>Prezzo</h3></td>
@@ -154,7 +153,7 @@
 				</tr>
 				<tr>
 					<td><h3>Immagine</h3></td>
-					<td><input type="file" id="immagine" name="immagine" 
+					<td><input type="file" id="immagine" name="immagine"
 						accept="image/png, image/jpeg"></td>
 				</tr>
 				<tr>
