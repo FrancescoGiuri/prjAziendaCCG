@@ -32,7 +32,7 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Logger logger = LogManager.getLogger(LoginServlet.class);
-		logger.debug("Logout effettuato");
+		logger.debug("Logout effettuato");//log
 		request.getSession().removeAttribute("SESSION_USERNAME");
 		request.getSession().removeAttribute("SESSION_TYPE");
 		request.getSession().invalidate();

@@ -43,7 +43,7 @@ public class ResendServlet extends HttpServlet {
 			logger.debug("Mail con password inviata");
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Errore nel resend password");
+			logger.error("Errore nel resend password");//log
 		}
 
 	}

@@ -40,7 +40,7 @@ public class InitServlet extends HttpServlet {
 			config.getServletContext().setAttribute("SESSION_NUM_DIPENDENTI", numDipendenti);
 			config.getServletContext().setAttribute("SESSION_NUM_CLIENTI", numClienti);
 			config.getServletContext().setAttribute("SESSION_NUM_ORDINI", numOrdini);
-			String log4jConfigFile = config.getServletContext().getRealPath("/conf/log4j.xml");
+			String log4jConfigFile = config.getServletContext().getRealPath("/conf/log4j.xml"); //log
 			ConfigurationSource source = new ConfigurationSource(new FileInputStream(log4jConfigFile));
 			Configurator.initialize(null, source);
 		} catch (Exception e) {

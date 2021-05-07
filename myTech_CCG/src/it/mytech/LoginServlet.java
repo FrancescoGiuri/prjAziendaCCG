@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
 					request.getSession().setAttribute("SESSION_USER_TYPE", 3);
 				}
 				String locale = request.getParameter("locale");
-				logger.debug("Login effettuato");
+				logger.debug("Login effettuato"); //log
 				if (tipo == 3 && !request.getParameter("from").equals("login.jsp"))
 					response.sendRedirect(request.getParameter("from") + "?locale=" + locale);
 				else if (tipo == 3)
