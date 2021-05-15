@@ -55,15 +55,18 @@ public class OrdineServlet extends HttpServlet {
 			int idOrdine = db.getNewId("ORDINE");
 			db.createOrdine(idOrdine, (Integer) request.getSession().getAttribute("SESSION_IDCLIENTE"), elenco, q);
 			String email = db.getEmail((Integer) request.getSession().getAttribute("SESSION_IDCLIENTE"));
-			cmm.sendConfermaOrdine(email);
 			PDFPrint pdf = new PDFPrint();
 			ByteArrayOutputStream output = pdf.printOrdineRecap(idOrdine);
+			cmm.sendConfermaOrdine2(email, output);
+
 			response.addHeader("Content-Type", "application/force-download");
 			response.addHeader("Content-Disposition", "attachment; filename=\"RecapOrdine.pdf\"");
 			response.getOutputStream().write(output.toByteArray());
 			request.getSession().removeAttribute("SESSION_PRODOTTI_CARRELLO");
 			request.getSession().removeAttribute("SESSION_QUANTITA_CARRELLO");
-			//response.sendRedirect("servizi?cmd=viewall&locale=" + request.getParameter("locale"));
+			int numOrdini = db.getNumOrdini();
+			request.getServletContext().setAttribute("SESSION_NUM_ORDINI", numOrdini);
+			// response.sendRedirect("servizi?cmd=viewall&locale=" + request.("locale"));
 			logger.debug("Ordine effettuato");
 		} catch (Exception e) {
 			e.printStackTrace();

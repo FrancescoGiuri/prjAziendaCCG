@@ -75,6 +75,8 @@ public class DipendentiServlet extends HttpServlet {
 				db = new DBManager();
 				db.addDipendente(a);
 				db.close();
+				int numDipendenti = db.getNumOrdini();
+				request.getServletContext().setAttribute("SESSION_NUM_DIPENDENTI", numDipendenti);
 				response.sendRedirect("dipendenti.jsp");
 			} catch (Exception e) {
 				e.printStackTrace();

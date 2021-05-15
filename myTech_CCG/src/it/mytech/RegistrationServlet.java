@@ -55,6 +55,8 @@ public class RegistrationServlet extends HttpServlet {
 				request.getSession().setAttribute("SESSION_USERNAME", c.getNome());
 				request.getSession().setAttribute("SESSION_IDCLIENTE", c.getIdCliente());
 				cmm.sendRegistrazione(email,getServletContext().getRealPath("/pdf" + File.separator + "PrivacyPolicy.pdf"));
+				int numClienti = db.getNumOrdini();
+				request.getServletContext().setAttribute("SESSION_NUM_CLIENTI", numClienti);
 				response.sendRedirect("login.jsp?from=index.jsp");
 			} else
 				response.sendRedirect("registrazione.jsp");
